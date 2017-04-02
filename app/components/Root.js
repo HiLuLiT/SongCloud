@@ -27,7 +27,7 @@ export default function Root() {
           </Switch>
         {/*<Signup/>*/}
         {/*<Signin/>*/}
-        {/*<Player/>*/}
+        <Player/>
       </div>
       </BrowserRouter>
     );

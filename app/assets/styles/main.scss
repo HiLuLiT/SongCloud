@@ -1,6 +1,6 @@
-// General styling
+// ========================= General Styling =============================
 html {
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Roboto','Roboto-Light',sans-serif;
 }
 
 html,
@@ -28,7 +28,10 @@ a:active {
   width: 100%;
 }
 
-// Signin & SignUp
+.main {
+  padding-top: 64px;
+}
+// ========================= SignIn & SignUp =============================
 
 .sign-in-wrapper {
   width: 100%;
@@ -105,18 +108,28 @@ a:active {
   font-size: 20px;
 }
 
-// Topbar
+// ========================= Topbar =============================
 
 .my-header {
+  position: fixed;
   background-color: #2196F3;
   display: flex;
   justify-content: space-between;
   height: 64px;
+  width: 100%;
+}
+
+.right-top-bar-div {
+  display: flex;
+  align-self: center;
+  margin-right: 20px;
 }
 
 .search-div {
-  align-self: center;
-  margin-right: 20px;
+  border: 1px solid #D8D8D8;
+  border-radius: 25px;
+  background-color: #1E88E5;
+  width: 235px;
 }
 
 .logo-title-div {
@@ -126,35 +139,56 @@ a:active {
 }
 
 .input-field {
-  width: 290px;
-  padding: 6px 10px 6px 30px;
-  font-size: 14px;
-  border: 1px solid #D8D8D8;
-  border-radius: 25px;
+  padding: 6px 6px 6px 6px;
+  font-weight: 100;
+  font-size: 13px;
+  letter-spacing: 1px;
+  border: none;
   background-color: #1E88E5;
+  color: white;
+  outline: 0;
+  width: 180px;
+}
+
+.input-field::-webkit-input-placeholder {
+  color: #FFFFFF;
+  font-family: 'Roboto-Light';
+  font-weight: lighter;
+  font-size: 12px;
+  letter-spacing: 1px;
 }
 
 .nav-header {
   margin-left: 40px;
+  line-height: 64px;
 }
 
-.nav-header li {
+.nav-header li a {
   display: inline-block;
+  color: white;
+  height: 64px;
+  padding: 0 10px;
 }
+
+.selected {
+ background-color: #1E88E5;
+  height: 64px;
+}
+
 
 .nav-header li {
   margin-top: 0;
   margin-left: 20px;
-  color: white;
   font-weight: 100;
   font-size: 15px;
+  display: inline-block;
+  height: 64px;
 }
 
 .title {
   display: inline-block;
   text-transform: uppercase;
   color: #FFFFF9;
-  font-family: Open Sans, "sans-serif";
   letter-spacing: 1px;
   font-size: 20px;
   font-weight: 200;
@@ -169,6 +203,7 @@ a:active {
 .cloud-logo-topbar {
   font-size: 30px;
   color: white;
+  margin-top: 1px;
 }
 
 .log-out-btn {
@@ -177,13 +212,40 @@ a:active {
   color: white;
 }
 
-// Explore
+.search-font {
+  font-size: 17px;
+  color: #FFFFFF;
+  margin-left: 10px;
+}
+
+// ========================= Explore =============================
 
 .genre-nav {
   display: flex;
   list-style: none;
   justify-content: space-around;
+  align-items: center;
   padding-left: 0;
+  height: 40px;
+  background-color: #DDE4E6;
+  margin: 0;
+  font-weight: 100;
+  text-transform: uppercase;
+}
+
+.genre-nav li:hover {
+  color: #2d2d11;
+  box-shadow: inset 0 -2px 0 #5CB3FF;
+  transition: all .2s ease-in-out;
+}
+
+
+.genre-nav li {
+  padding: 11px;
+  padding-right: 50px;
+  padding-left: 50px;
+  border-right: 1px solid lightgrey;
+  border-left: 1px solid lightgrey;
 }
 
 .songs-list {
@@ -208,10 +270,12 @@ a:active {
   width: 200px;
   height: 85px;
   object-fit: cover;
+
 }
 
 .span-song-name {
   font-size: 11px;
+  color: #4A4A4A;
 }
 
 .span-song-duration {
@@ -229,4 +293,180 @@ a:active {
   font-size: 14px;
   color: #D8D8D8;
   margin-left: 150px;
+  transition: all .2s ease-in-out;
 }
+
+.heart-font:hover {
+  color: #2196F3;
+  transform: scale(1.10);
+}
+
+.prev-btn {
+  background: #2196F3;
+  border-radius: 2px;
+  width: 87px;
+  height: 30px;
+  margin-right: 80px;
+  border: none;
+  font-family: Roboto-Medium;
+  font-size: 13px;
+  color: #FFFFFF;
+}
+
+.next-btn {
+  background: #2196F3;
+  border-radius: 2px;
+  width: 87px;
+  height: 30px;
+  margin-left: 80px;
+  border: none;
+  font-family: Roboto-Medium;
+  font-size: 13px;
+  color: #FFFFFF;
+}
+
+.page-nav-div {
+  display: flex;
+  position: absolute;
+  bottom: 75px;
+  width: 100%;
+  justify-content: center;
+  align-content: center;
+}
+
+
+// ========================= Player =============================
+
+.player-div {
+  position: fixed;
+  display: flex;
+  bottom: 0;
+  width: 100%;
+  height: 60px;
+  background-color: #FBFBFB;
+  align-items: center;
+}
+
+.player-img {
+  width: 50px;
+  height: 50px;
+  margin-left: 30px;
+  margin-right: 10px;
+}
+
+.song-display-div {
+  width: 0;
+  display: flex;
+  align-items: center;
+}
+
+.player-display {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 5px;
+}
+
+//.volume-bar {
+//  margin-left: 10px;
+//  background-color: #2196F3;
+//}
+//
+//.volume-font {
+//  margin-right: 10px;
+//  color: #BABABA;
+//}
+
+//.download-font {
+//  margin-left: 15px;
+//  color: #BABABA;
+//}
+//
+//// ============================= Custom range input =======================
+//
+//input[type=range] {
+//  -webkit-appearance: none;
+//  width: 5%;
+//  margin: 6px 0;
+//}
+//input[type=range]:focus {
+//  outline: none;
+//}
+//input[type=range]::-webkit-slider-runnable-track {
+//  width: 100%;
+//  height: 0px;
+//  cursor: pointer;
+//  box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+//  background: #0000ff;
+//  border-radius: 0px;
+//  border: 0.2px solid #0084ff;
+//}
+//input[type=range]::-webkit-slider-thumb {
+//  box-shadow: 0.3px 0.3px 0.3px rgba(0, 0, 0, 0), 0px 0px 0.3px rgba(13, 13, 13, 0);
+//  border: 0px solid rgba(0, 0, 0, 0);
+//  height: 12px;
+//  width: 12px;
+//  border-radius: 50px;
+//  background: #0084ff;
+//  cursor: pointer;
+//  -webkit-appearance: none;
+//  margin-top: -6.2px;
+//}
+//input[type=range]:focus::-webkit-slider-runnable-track {
+//  background: #0f0fff;
+//}
+//input[type=range]::-moz-range-track {
+//  width: 100%;
+//  height: 0px;
+//  cursor: pointer;
+//  box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+//  background: #0000ff;
+//  border-radius: 0px;
+//  border: 0.2px solid #0084ff;
+//}
+//input[type=range]::-moz-range-thumb {
+//  box-shadow: 0.3px 0.3px 0.3px rgba(0, 0, 0, 0), 0px 0px 0.3px rgba(13, 13, 13, 0);
+//  border: 0px solid rgba(0, 0, 0, 0);
+//  height: 12px;
+//  width: 12px;
+//  border-radius: 50px;
+//  background: #0084ff;
+//  cursor: pointer;
+//}
+//input[type=range]::-ms-track {
+//  width: 100%;
+//  height: 0px;
+//  cursor: pointer;
+//  background: transparent;
+//  border-color: transparent;
+//  color: transparent;
+//}
+//input[type=range]::-ms-fill-lower {
+//  background: #0000f0;
+//  border: 0.2px solid #0084ff;
+//  border-radius: 0px;
+//  box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+//}
+//input[type=range]::-ms-fill-upper {
+//  background: #0000ff;
+//  border: 0.2px solid #0084ff;
+//  border-radius: 0px;
+//  box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+//}
+//input[type=range]::-ms-thumb {
+//  box-shadow: 0.3px 0.3px 0.3px rgba(0, 0, 0, 0), 0px 0px 0.3px rgba(13, 13, 13, 0);
+//  border: 0px solid rgba(0, 0, 0, 0);
+//  height: 12px;
+//  width: 12px;
+//  border-radius: 50px;
+//  background: #0084ff;
+//  cursor: pointer;
+//  height: 0px;
+//}
+//input[type=range]:focus::-ms-fill-lower {
+//  background: #0000ff;
+//}
+//input[type=range]:focus::-ms-fill-upper {
+//  background: #0f0fff;
+//}

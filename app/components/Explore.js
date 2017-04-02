@@ -25,12 +25,6 @@ export default class Explore extends React.Component {
 
   }
 
-  millisToMinutesAndSeconds(millis) {
-    const minutes = Math.floor(millis / 60000);
-    const seconds = ((millis % 60000) / 1000).toFixed(0);
-    return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
-  }
-
   createSongs() {
     return (
       <div>
@@ -39,8 +33,7 @@ export default class Explore extends React.Component {
           const minutes = Math.floor(parseInt(song.duration) / 60000);
           const seconds = ((parseInt(song.duration % 60000) / 1000).toFixed(0));
           const songDuration = (seconds === 60 ? (minutes+1) + ":00" : minutes + ":" + (seconds < 10 ? "0" : "") + seconds);
-          const songName = (song.title).slice(0, 30);
-          console.info(songName);
+          const songName = (song.title).slice(0, 30) + '...';
           return (
             <li key={song.id}>
             <img className="song-img" src={song.artwork_url} alt="MDN"></img>
@@ -71,23 +64,25 @@ export default class Explore extends React.Component {
         return <div>Error!</div>;
       case 'loaded':
         return (
-          <div>
+          <div className="main">
             <nav>
               <ul className="genre-nav">
-                <li>Music Category</li>
-                <li>Music Category</li>
-                <li>Music Category</li>
-                <li>Music Category</li>
-                <li>Music Category</li>
-                <li>Music Category</li>
+                <li>all music</li>
+                <li>hip hop rap</li>
+                <li>house</li>
+                <li>rock</li>
+                <li>pop</li>
+                <li>dubstep</li>
               </ul>
             </nav>
             <div>
               {this.createSongs()}
             </div>
-            <button>Previous</button>
-            <span>current Page #</span>
-            <button>Next</button>
+            <div className="page-nav-div">
+            <button className="btn--raised btn--blue prev-btn">Previous</button>
+            <span>Page 1</span>
+            <button className="next-btn">Next</button>
+            </div>
           </div>
         );
     }

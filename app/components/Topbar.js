@@ -18,8 +18,11 @@ export default function Topbar() {
         </nav>
       </div>
 
-      <div className="search-div">
+      <div className="right-top-bar-div">
+        <div className="search-div">
+        <i className="fa fa-search search-font" aria-hidden="true"></i>
         <input className="input-field" type="text" placeholder="SEARCH"/>
+        </div>
         <button className="log-out-btn">Log Out</button>
       </div>
     </div>
