@@ -22,8 +22,13 @@ export default function Root() {
               <Redirect to="/explore" />
             )}/>
 
-            <Route exact path="/explore" component= { Explore } />
+            <Route exact path="/explore" component={() => (
+              <Redirect to="/explore/trance" />
+            )}/>
+
+
             <Route exact path="/playlists" component= { Playlists } />
+            <Route path="/explore/:genre" component={ Explore }/>
           </Switch>
         {/*<Signup/>*/}
         {/*<Signin/>*/}

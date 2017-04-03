@@ -1,5 +1,5 @@
 import React from 'react';
-
+import {NavLink} from 'react-router-dom'
 export default class Explore extends React.Component {
   constructor() {
     super();
@@ -9,20 +9,32 @@ export default class Explore extends React.Component {
     };
   }
 
-  componentDidMount() {
+  GetXhr(){
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', 'https://create-bootcamp-songcloud-server.now.sh/tracks?genre=trance');
+    const genre = this.props.match.params.genre;
+
+    xhr.open('GET', `https://create-bootcamp-songcloud-server.now.sh/tracks?genre=${genre}`);
 
     xhr.addEventListener('load', () => {
       this.setState({songs: JSON.parse(xhr.responseText), loadingState: 'loaded'});
     });
-
     xhr.addEventListener('error', () => {
       this.setState({loadingState: 'error'});
     });
-
     xhr.send();
+  }
 
+  componentDidMount() {
+    console.info('did mount');
+    this.GetXhr();
+  }
+
+  componentDidUpdate(prevProps) {
+    console.info(prevProps);
+    if (prevProps.match.params.genre === this.props.match.params.genre)
+      return;
+    console.log('did update');
+    this.GetXhr();
   }
 
   createSongs() {
@@ -36,7 +48,7 @@ export default class Explore extends React.Component {
           const songName = (song.title).slice(0, 30) + '...';
           return (
             <li key={song.id}>
-            <img className="song-img" src={song.artwork_url} alt="MDN"></img>
+              <div className="song-img" style={{'backgroundImage': `url(${song.artwork_url.replace('large', 't300x300')})`}}></div>
               <span className="span-song-name">{songName}</span>
               <div>
                 <i className="fa fa-clock-o clock-font" aria-hidden="true"></i>
@@ -53,10 +65,20 @@ export default class Explore extends React.Component {
     );
   }
 
+  genreChooser() {
+    return (
+      <div>
+        <ul className="genre-nav">
+         <li><NavLink to="/explore/trance" activeClassName="selected-genre">Trance</NavLink></li>
+         <li><NavLink to="/explore/house" activeClassName="selected-genre">House</NavLink></li>
+         <li><NavLink to="/explore/dubstep" activeClassName="selected-genre">Dubstep</NavLink></li>
+        </ul>
+      </div>
+    )
+  }
+
 
   render() {
-    console.info(this.state.songs);
-    console.info(this.state.loadingState);
     switch (this.state.loadingState) {
       case 'loading':
         return <div>Loading...</div>;
@@ -66,20 +88,13 @@ export default class Explore extends React.Component {
         return (
           <div className="main">
             <nav>
-              <ul className="genre-nav">
-                <li>all music</li>
-                <li>hip hop rap</li>
-                <li>house</li>
-                <li>rock</li>
-                <li>pop</li>
-                <li>dubstep</li>
-              </ul>
+              {this.genreChooser()}
             </nav>
             <div>
               {this.createSongs()}
             </div>
             <div className="page-nav-div">
-            <button className="btn--raised btn--blue prev-btn">Previous</button>
+            <button className="prev-btn">Previous</button>
             <span>Page 1</span>
             <button className="next-btn">Next</button>
             </div>
