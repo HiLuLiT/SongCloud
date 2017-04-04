@@ -1,19 +1,27 @@
 import React from 'react';
-import {NavLink} from 'react-router-dom'
+import {NavLink} from 'react-router-dom';
+import MDSpinner from "react-md-spinner";
+import CreateSongs from './CreateSongs';
+
 export default class Explore extends React.Component {
+
   constructor() {
     super();
     this.state = {
       songs: [],
-      loadingState: 'loading'
+      loadingState: 'loading',
+      offset: 0,
+      limit: 15
     };
   }
 
-  GetXhr(){
+  getSongs() {
     const xhr = new XMLHttpRequest();
     const genre = this.props.match.params.genre;
+    const offset = this.state.offset;
+    const limit = this.state.limit;
 
-    xhr.open('GET', `https://create-bootcamp-songcloud-server.now.sh/tracks?genre=${genre}`);
+    xhr.open('GET', `https://api.soundcloud.com/tracks?client_id=2t9loNQH90kzJcsFCODdigxfp325aq4z&limit=${limit}&offset=${offset}&tags=${genre}`);
 
     xhr.addEventListener('load', () => {
       this.setState({songs: JSON.parse(xhr.responseText), loadingState: 'loaded'});
@@ -24,64 +32,63 @@ export default class Explore extends React.Component {
     xhr.send();
   }
 
+  nextPage() {
+    this.setState({
+      offset: this.state.offset + this.state.limit
+    })
+  }
+
+  prevPage() {
+    this.setState({
+      offset: this.state.offset - this.state.limit
+    })
+  }
+
   componentDidMount() {
     console.info('did mount');
-    this.GetXhr();
+    this.getSongs();
   }
 
-  componentDidUpdate(prevProps) {
-    console.info(prevProps);
-    if (prevProps.match.params.genre === this.props.match.params.genre)
-      return;
-    console.log('did update');
-    this.GetXhr();
-  }
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.match.params.genre !== this.props.match.params.genre) {
+      this.setState({offset: 0}, () => {
+        this.getSongs();
+      });
+    }
+    if (this.state.offset !== prevState.offset) {
+      this.getSongs();
+    }
 
-  createSongs() {
-    return (
-      <div>
-      <ul className="songs-list">
-        { this.state.songs.map((song) => {
-          const minutes = Math.floor(parseInt(song.duration) / 60000);
-          const seconds = ((parseInt(song.duration % 60000) / 1000).toFixed(0));
-          const songDuration = (seconds === 60 ? (minutes+1) + ":00" : minutes + ":" + (seconds < 10 ? "0" : "") + seconds);
-          const songName = (song.title).slice(0, 30) + '...';
-          return (
-            <li key={song.id}>
-              <div className="song-img" style={{'backgroundImage': `url(${song.artwork_url.replace('large', 't300x300')})`}}></div>
-              <span className="span-song-name">{songName}</span>
-              <div>
-                <i className="fa fa-clock-o clock-font" aria-hidden="true"></i>
-                <span className="span-song-duration">{songDuration}</span>
-                <i className="fa fa-heart-o heart-font" aria-hidden="true"></i>
-              </div>
-            </li>
-
-          )
-        }) }
-
-      </ul>
-      </div>
-    );
   }
 
   genreChooser() {
     return (
       <div>
         <ul className="genre-nav">
-         <li><NavLink to="/explore/trance" activeClassName="selected-genre">Trance</NavLink></li>
-         <li><NavLink to="/explore/house" activeClassName="selected-genre">House</NavLink></li>
-         <li><NavLink to="/explore/dubstep" activeClassName="selected-genre">Dubstep</NavLink></li>
+          <li><NavLink to="/explore/trance" activeClassName="selected-genre">Trance</NavLink></li>
+          <li><NavLink to="/explore/house" activeClassName="selected-genre">House</NavLink></li>
+          <li><NavLink to="/explore/dubstep" activeClassName="selected-genre">Dubstep</NavLink></li>
+          <li><NavLink to="/explore/pop" activeClassName="selected-genre">Pop</NavLink></li>
+          <li><NavLink to="/explore/indie" activeClassName="selected-genre">Indie</NavLink></li>
+          <li><NavLink to="/explore/deep" activeClassName="selected-genre">Deep</NavLink></li>
+          <li><NavLink to="/explore/hiphop" activeClassName="selected-genre">HipHop</NavLink></li>
         </ul>
       </div>
     )
   }
 
+  render(props) {
+    console.info('I was rendered');
+    console.info('props inside EXPLORE', this.props);
+    const isFirstPage = this.state.offset === 0;
 
-  render() {
     switch (this.state.loadingState) {
       case 'loading':
-        return <div>Loading...</div>;
+        return (
+          <div className="spinner">
+            <MDSpinner size={100}/>
+          </div>
+        );
       case 'error':
         return <div>Error!</div>;
       case 'loaded':
@@ -91,12 +98,16 @@ export default class Explore extends React.Component {
               {this.genreChooser()}
             </nav>
             <div>
-              {this.createSongs()}
+              <CreateSongs songs={this.state.songs} updateCurrentTrack={this.props.updateCurrentTrack}/>
+              {/*{React.createElement(CreateSongs, {songs: this.state.songs, x: "hello"})}*/}
             </div>
+
             <div className="page-nav-div">
-            <button className="prev-btn">Previous</button>
-            <span>Page 1</span>
-            <button className="next-btn">Next</button>
+              <button className="prev-btn" onClick={ this.prevPage.bind(this) }
+                      disabled={isFirstPage}>Previous
+              </button>
+              <span>Page {(this.state.offset / this.state.limit) + 1 }</span>
+              <button className="next-btn" onClick={ this.nextPage.bind(this)}>Next</button>
             </div>
           </div>
         );

@@ -1,6 +1,6 @@
 // ========================= General Styling =============================
 html {
-  font-family: 'Roboto','Roboto-Light',sans-serif;
+  font-family: 'Roboto', 'Roboto-Light', sans-serif;
 }
 
 html,
@@ -10,6 +10,7 @@ body {
   width: 100%;
   height: 100%;
   box-sizing: border-box;
+
 }
 
 a:link,
@@ -31,6 +32,13 @@ a:active {
 .main {
   padding-top: 64px;
 }
+
+.spinner {
+  position: fixed;
+  top: 20%;
+  left: 40%;
+}
+
 // ========================= SignIn & SignUp =============================
 
 .sign-in-wrapper {
@@ -171,10 +179,9 @@ a:active {
 }
 
 .selected {
- background-color: #1E88E5;
+  background-color: #1E88E5;
   height: 64px;
 }
-
 
 .nav-header li {
   margin-top: 0;
@@ -223,14 +230,12 @@ a:active {
 .genre-nav {
   display: flex;
   list-style: none;
-  justify-content: space-around;
-  align-items: center;
-  padding-left: 0;
-  height: 40px;
+  color: #4A4A4A;
   background-color: #DDE4E6;
   margin: 0;
   font-weight: 100;
   text-transform: uppercase;
+  justify-content: center;
 }
 
 .genre-nav li:hover {
@@ -239,19 +244,21 @@ a:active {
   transition: all .2s ease-in-out;
 }
 
-
 .genre-nav li {
   padding: 11px;
   padding-right: 50px;
   padding-left: 50px;
   border-right: 1px solid lightgrey;
-  border-left: 1px solid lightgrey;
+}
+
+.genre-nav li a {
+  color: #4A4A4A;
 }
 
 .songs-list {
   display: flex;
   list-style: none;
-  justify-content: space-around;
+  justify-content: space-between;
   padding-left: 0;
   flex-wrap: wrap;
 }
@@ -333,24 +340,32 @@ a:active {
 
 .page-nav-div {
   display: flex;
-  position: absolute;
   bottom: 75px;
   width: 100%;
   justify-content: center;
   align-content: center;
 }
 
-
 // ========================= Player =============================
 
 .player-div {
+  width: 100%;
   position: fixed;
   display: flex;
   bottom: 0;
-  width: 100%;
   height: 60px;
   background-color: #FBFBFB;
   align-items: center;
+  justify-content: center;
+}
+
+.player-left-wrap {
+  width: 0px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-size: cover;
+  background-position: center;
 }
 
 .player-img {
@@ -358,18 +373,101 @@ a:active {
   height: 50px;
   margin-left: 30px;
   margin-right: 10px;
+  position: absolute;
 }
 
-.song-display-div {
-  width: 0;
-  display: flex;
-  align-items: center;
+.song-name {
+  font-family: Roboto-Regular;
+  font-size: 11px;
+  color: #4a4a4a;
+  position: absolute;
+  left: 110px;
 }
 
 .player-display {
   width: 100%;
   display: flex;
   justify-content: center;
-  align-items: center;
   margin-right: 5px;
+}
+
+// ========================= Playlist =============================
+
+.left-nav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 200px;
+  height: 100%;
+  border-right: 1px solid;
+  color: #4A4A4A;
+  margin-right: 0px;
+}
+
+.new-playlist-btn {
+  background-color: #2196F3;
+  width: 180px;
+  height: 30px;
+  margin-bottom: 18px;
+  margin-top: 89px;
+  margin-right: 10px;
+  border: none;
+  color: white;
+  border-radius: 7px;
+}
+
+.btn-div {
+  border-bottom: 1px solid #4A4A4A;
+  width: 180px;
+}
+
+.left-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.left-list li {
+  margin-bottom: 20px;
+}
+
+.playlist-section {
+  display: flex;
+  flex-direction: row;
+}
+
+.songs-div {
+  position: absolute;
+  top: 84px;
+}
+
+.header-div {
+  width: 784px;
+  height: 64px;
+  background: #FFFFFF;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 2px 0 rgba(0, 0, 0, 0.12);
+  font-family: Roboto-Light;
+  font-size: 18px;
+  color: #000000;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 20px;
+}
+
+.header-div h2 {
+  margin-left: 20px;
+}
+
+.del-btn {
+  margin-right: 20px;
+  border: none;
+  font-family: Roboto-Medium;
+  font-size: 13px;
+  color: #F44336;
+  background-color: white;
+}
+
+.playlist-songs {
+
 }
