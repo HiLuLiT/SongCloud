@@ -79,7 +79,7 @@ export default class Explore extends React.Component {
 
   render(props) {
     console.info('I was rendered');
-    console.info('here are props from EXPLORE, do i have updatecurrent?', props);
+    console.info('are there playlist here? im EXPLORE', props);
     const isFirstPage = this.state.offset === 0;
 
     switch (this.state.loadingState) {
@@ -97,7 +97,7 @@ export default class Explore extends React.Component {
           <div>
             <ul className="songs-list">
             {this.state.songs.map((song) => <li key={song.id}>
-              <CreateSong songs={song} updateCurrentTrack={this.props.updateCurrentTrack}/>
+              <CreateSong song={song} updateCurrentTrack={this.props.updateCurrentTrack}/>
             </li>)}
             </ul>
           </div>

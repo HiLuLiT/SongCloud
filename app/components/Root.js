@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
+import uuid from 'uuid';
 
 import Topbar from './Topbar'
 import Explore from './Explore'
@@ -16,8 +17,8 @@ export default class Root extends React.Component {
       currentTrack: {},
       playlists: [
         {
-          id: 111,
-          title: 'my 1st playlist',
+          id: uuid(),
+          title: 'My 1st Playlist',
           songs: [
             {
               "id": 250711755,
@@ -29,8 +30,8 @@ export default class Root extends React.Component {
             }]
         },
         {
-          id: 222,
-          title: 'my 2nd playlist',
+          id: uuid(),
+          title: 'My 2nd Playlist',
           songs: [
             {
               "id": 250711755,
@@ -42,8 +43,8 @@ export default class Root extends React.Component {
             }]
         },
         {
-          id: 333,
-          title: 'my 3rd playlist',
+          id: uuid(),
+          title: 'My 3rd Playlist',
           songs: [
             {
               "id": 250711755,
@@ -59,6 +60,8 @@ export default class Root extends React.Component {
   }
 
   updateCurrentTrack(newSong) {
+    console.info('newsong in updatecurrent track', newSong);
+
     this.setState({
       currentTrack: Object.assign({}, newSong)
     })
@@ -85,11 +88,13 @@ export default class Root extends React.Component {
 
           {/*{we can't use component={explore} cause this way we can't give it properties}*/}
           <Route path="/explore/:genre" render={ (props) => {
-            return <Explore updateCurrentTrack={this.updateCurrentTrack}
+            return <Explore playlists={this.state.playlists}
+                            {...props}
+                            updateCurrentTrack={this.updateCurrentTrack}
                             {...props}/>
           } }/>
 
-          <Route exact path="/playlists" render={() => {
+          <Route exact path="/playlists" render={(props) => {
             return <Playlists playlists= {this.state.playlists}
                               updateCurrentTrack={this.updateCurrentTrack}
                               {...props}/>

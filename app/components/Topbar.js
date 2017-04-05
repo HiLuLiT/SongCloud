@@ -23,7 +23,7 @@ export default function Topbar() {
         <i className="fa fa-search search-font" aria-hidden="true"></i>
         <input className="input-field" type="text" placeholder="SEARCH"/>
         </div>
-        <button className="log-out-btn">Sign In</button>
+        <button className="log-out-btn">SignIN</button>
       </div>
     </div>
   );

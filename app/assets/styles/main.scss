@@ -265,7 +265,7 @@ a:active {
   width: 100%;
 }
 
-fixing last row problem with songs
+//fixing last row problem with songs
 .songs-list:after {
   content: "";
   flex: auto;
@@ -305,14 +305,14 @@ fixing last row problem with songs
   color: #4A4A4A;
 }
 
-.heart-font {
+.heart-font-o {
   font-size: 14px;
   color: #D8D8D8;
   margin-left: 150px;
   transition: all .2s ease-in-out;
 }
 
-.heart-font:hover {
+.heart-font-o:hover {
   color: #2196F3;
   transform: scale(1.10);
 }
@@ -426,17 +426,21 @@ fixing last row problem with songs
 }
 
 .btn-div {
-  border-bottom: 1px solid #4A4A4A;
   width: 180px;
+  border-bottom: 1px solid #D8D8D8;
 }
 
 .left-list {
   list-style: none;
   padding-left: 0;
+  width: 180px;
 }
 
 .left-list li {
   margin-bottom: 20px;
+  font-family: Roboto-Light;
+  font-size: 15px;
+  color: #000000;
 }
 
 .playlist-section {
@@ -466,7 +470,14 @@ fixing last row problem with songs
   margin-left: 20px;
 }
 
-.header-div h2 {
+.header-div label {
+  margin-left: 20px;
+  font-family: Roboto-Light;
+  font-size: 22px;
+  color: #000000;
+}
+
+.header-div input {
   margin-left: 20px;
   font-family: Roboto-Light;
   font-size: 22px;
@@ -481,6 +492,7 @@ fixing last row problem with songs
   color: #F44336;
   background-color: white;
 }
+
 
 // ========================== ADD TO PLAYLIST DROPDOWN ===================
 
@@ -512,12 +524,6 @@ fixing last row problem with songs
 .add-edit-div {
   margin-left: 10px;
   margin-bottom: 10px;
-  //border-bottom: 1px solid;
-  //color: #4A4A4A;
-  //padding-top: 5px;
-  //padding-left: 10px;
-  //width: 100px;
-  //padding-bottom: 4px;
 }
 
 .playlist-checkbox-div {
@@ -526,16 +532,14 @@ fixing last row problem with songs
   margin-left: 10px;
 }
 
-.playlist-checkbox-div label {
+.playlist-checkbox-div .label {
   font-family: Roboto-Regular;
   font-size: 9px;
   color: #4A4A4A;
   display: flex;
   flex-direction: row-reverse;
   justify-content: flex-end;
-  //margin-left: 10px;
   margin-bottom: 5px;
-  //margin-top: 5px;
 }
 
 .playlist-checkbox-div input {
@@ -547,3 +551,56 @@ fixing last row problem with songs
   right: 7px;
   bottom: 1px;
 }
+
+.heart-font {
+  color: #2196F3;
+}
+// ========== helpers =======
+.hidden {
+  display: none;
+}
+
+
+// ==================== yael's checkbox ===========
+//
+//checkbox with transition
+//
+//.track-drop-list label.checkbox {
+//  padding-left: 20px;
+//  cursor: pointer;
+//}
+//
+//.indicator {
+//  border-radius: 3px;
+//  border: 1px solid #dde4e6;
+//  position: absolute;
+//  left: 0;
+//  top: 9px;
+//  width: 0.9rem;
+//  height: 0.9rem;
+//  background-color: #ffff;
+//  cursor: pointer;
+//  transition: all .2s ease-in;
+//}
+//
+//label:hover > .indicator,
+//.indicator:hover {
+//  border: 2px solid #2196f3;
+//}
+//
+//input[type=checkbox] {
+//  opacity: 0;
+//}
+//
+//.track-drop-list label.checkbox > input[type="checkbox"]:checked ~ .indicator {
+//  background: #2196f3 url('data:image/svg+xml;utf8,<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 75 75"><defs><style>.cls-1{fill:#fff;}</style></defs><title>Artboard 1</title><g id="GyyoQ7.tif"><path class="cls-1" d="M71.23,18.81l-6.12-6.12a4.05,4.05,0,0,0-5.73,0h0L30.59,41.48l-13-13a4,4,0,0,0-5.73,0h0L5.77,34.64a4.05,4.05,0,0,0,0,5.73h0L21.6,56.19l6.12,6.12a4.05,4.05,0,0,0,5.73,0h0l6.12-6.12L71.23,24.54a4,4,0,0,0,0-5.73Z"/></g></svg>') no-repeat;
+//  border: 2px solid #2196f3;
+//}
+//
+//html -
+//<li>
+//<label htmlFor={morningSunshine} className="checkbox">{this.trackTitleSlicer(morningSunshine,14)}
+//<input type="checkbox" name="plyList" value={morningSunshine} id={morningSunshine}/>
+//<span className="indicator"/>
+//</label>
+//</li>
