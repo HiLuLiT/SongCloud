@@ -1,8 +1,8 @@
 import React from 'react';
-import CreateSongs from './CreateSongs';
+import CreateSong from './CreateSong';
 
 export default function Playlists(props) {
-  console.info(props);
+  console.info('PROPS IN PLAYLISTS', props);
   return (
     <div className="playlist-section">
       <div className="left-nav">
@@ -18,20 +18,30 @@ export default function Playlists(props) {
         </ul>
       </div>
 
-      {props.playlists.map((playlist) => {
-        console.info(playlist);
+      <div className="playlist-explore">
+        {props.playlists.map((playlist) => {
+        console.info('how many times did i run', 'and with what:', playlist);
         return (
-        <div className="playlist-explore">
-          <div className="songs-div">
+          <div key={playlist.id} className="songs-div">
             <div className="header-div">
               <h2>{ playlist.title }</h2>
               <button className="del-btn">Delete</button>
             </div>
-            <CreateSongs songs={playlist.songs}/>
+            <div>
+              <ul className="songs-list">
+                {playlist.songs.map((song) => <li key={song.id}>
+                  <CreateSong songs={song} updateCurrentTrack={playlist.updateCurrentTrack}/>
+                </li>)}
+              </ul>
+            </div>
+            {/*<CreateSong songs={playlist.songs}/>*/}
           </div>
-        </div>
-        )
-      }) }
+          )
+        }) }
+          </div>
+
+
+
 
     </div>
     )};

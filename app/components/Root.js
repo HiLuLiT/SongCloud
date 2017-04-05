@@ -40,7 +40,20 @@ export default class Root extends React.Component {
               "uri": "https://api.soundcloud.com/tracks/250711755",
               "artwork_url": "https://i1.sndcdn.com/artworks-000150027827-4exjil-large.jpg"
             }]
-        }
+        },
+        {
+          id: 333,
+          title: 'my 3rd playlist',
+          songs: [
+            {
+              "id": 250711755,
+              "title": "The Chainsmokers - Don't Let Me Down (Illenium Remix)",
+              "duration": 219082,
+              "stream_url": "https://api.soundcloudcom/tracks/250711755/stream",
+              "uri": "https://api.soundcloud.com/tracks/250711755",
+              "artwork_url": "https://i1.sndcdn.com/artworks-000150027827-4exjil-large.jpg"
+            }]
+        },
       ]
     };
   }
@@ -51,7 +64,7 @@ export default class Root extends React.Component {
     })
   }
 
-  render() {
+  render(props) {
     return (
 
       <div className="root-div">
@@ -78,13 +91,14 @@ export default class Root extends React.Component {
 
           <Route exact path="/playlists" render={() => {
             return <Playlists playlists= {this.state.playlists}
-                              updateCurrentTrack={this.updateCurrentTrack}/>
+                              updateCurrentTrack={this.updateCurrentTrack}
+                              {...props}/>
           } }/>
 
 
 
         </Switch>
-        <Player track={this.state.currentTrack} />
+        <Player song={this.state.currentTrack} />
       </div>
     )
   }

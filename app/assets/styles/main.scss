@@ -125,6 +125,7 @@ a:active {
   justify-content: space-between;
   height: 64px;
   width: 100%;
+  z-index: 10;
 }
 
 .right-top-bar-div {
@@ -261,9 +262,10 @@ a:active {
   justify-content: space-between;
   padding-left: 0;
   flex-wrap: wrap;
+  width: 100%;
 }
 
-//fixing last row problem with songs
+fixing last row problem with songs
 .songs-list:after {
   content: "";
   flex: auto;
@@ -277,6 +279,7 @@ a:active {
   width: 220px;
   margin-right: 37px;
   margin-left: 30px;
+  position: relative;
 }
 
 .song-img {
@@ -357,6 +360,7 @@ a:active {
   background-color: #FBFBFB;
   align-items: center;
   justify-content: center;
+  z-index: 9;
 }
 
 .player-left-wrap {
@@ -391,6 +395,7 @@ a:active {
   margin-right: 5px;
 }
 
+
 // ========================= Playlist =============================
 
 .left-nav {
@@ -404,12 +409,16 @@ a:active {
   margin-right: 0px;
 }
 
+.playlist-explore {
+  margin-top: 20px;
+}
+
 .new-playlist-btn {
   background-color: #2196F3;
   width: 180px;
   height: 30px;
   margin-bottom: 18px;
-  margin-top: 89px;
+  margin-top: 20px;
   margin-right: 10px;
   border: none;
   color: white;
@@ -433,10 +442,12 @@ a:active {
 .playlist-section {
   display: flex;
   flex-direction: row;
+  height: 100%;
+  position: absolute;
+  top: 64px;
 }
 
 .songs-div {
-  position: absolute;
   top: 84px;
 }
 
@@ -457,6 +468,9 @@ a:active {
 
 .header-div h2 {
   margin-left: 20px;
+  font-family: Roboto-Light;
+  font-size: 22px;
+  color: #000000;
 }
 
 .del-btn {
@@ -468,6 +482,68 @@ a:active {
   background-color: white;
 }
 
-.playlist-songs {
+// ========================== ADD TO PLAYLIST DROPDOWN ===================
 
+.add-playlist-dropdown {
+  width: 130px;
+  background: #FFFFFF;
+  box-shadow: 0 1px 4px 0 rgba(0,0,0,0.37);
+  position: absolute;
+  right: 0px;
+  top: 18px;
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+  z-index: 8;
+}
+
+.add-edit-div span {
+  font-family: Roboto-Bold;
+  font-size: 11px;
+  color: #4A4A4A;
+}
+
+.add-edit-div button {
+  font-family: Roboto-Regular;
+  font-size: 9px;
+  color: #2196F3;
+}
+
+.add-edit-div {
+  margin-left: 10px;
+  margin-bottom: 10px;
+  //border-bottom: 1px solid;
+  //color: #4A4A4A;
+  //padding-top: 5px;
+  //padding-left: 10px;
+  //width: 100px;
+  //padding-bottom: 4px;
+}
+
+.playlist-checkbox-div {
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+}
+
+.playlist-checkbox-div label {
+  font-family: Roboto-Regular;
+  font-size: 9px;
+  color: #4A4A4A;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  //margin-left: 10px;
+  margin-bottom: 5px;
+  //margin-top: 5px;
+}
+
+.playlist-checkbox-div input {
+  margin-right: 4px;
+}
+
+.heart-playlist-div {
+  position: absolute;
+  right: 7px;
+  bottom: 1px;
 }
