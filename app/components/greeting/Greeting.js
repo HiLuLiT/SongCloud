@@ -1,3 +1,6 @@
+import './greeting.scss';
+
+
 import React from 'react';
 
 
@@ -57,7 +60,7 @@ export default class Greeting extends React.Component {
     let counterElm = this.state.isVisible ? <h2> Counter: {this.state.counter} </h2> : null;
 
     return (
-      <div>
+      <div className="greeting">
         <h2>Hey! My name is {this.props.name} and my age is {this.props.age}</h2>
         <button onClick={ () => this.handleClick() }> Click Me</button>
         <button onClick={ () => this.toggleVisible() }>Toggle View</button>

@@ -1,9 +1,12 @@
+import './topbar.scss';
+
+
 import React from 'react';
 import {NavLink} from 'react-router-dom'
 export default function Topbar() {
 
   return (
-    <div className="my-header">
+    <div className="topbar">
 
       <div className="logo-title-div">
         <NavLink to="/">

@@ -1,0 +1,39 @@
+// ========================= General Styling =============================
+html {
+  font-family: 'Roboto', 'Roboto-Light', sans-serif;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+a:link,
+a:visited,
+a:hover,
+a:active {
+  text-decoration: none;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+.root, #root {
+  height: 100%;
+  width: 100%;
+}
+
+.explore {
+  padding-top: 64px;
+}
+
+.spinner {
+  position: fixed;
+  top: 20%;
+  left: 40%;
+}

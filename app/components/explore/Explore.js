@@ -1,7 +1,9 @@
+import './explore.scss';
+
 import React from 'react';
 import {NavLink} from 'react-router-dom';
 import MDSpinner from "react-md-spinner";
-import CreateSong from './CreateSong';
+import CreateSong from '../createsong/CreateSong';
 
 export default class Explore extends React.Component {
 
@@ -45,7 +47,6 @@ export default class Explore extends React.Component {
   }
 
   componentDidMount() {
-    console.info('did mount');
     this.getSongs();
   }
 
@@ -69,17 +70,15 @@ export default class Explore extends React.Component {
           <li><NavLink to="/explore/house" activeClassName="selected-genre">House</NavLink></li>
           <li><NavLink to="/explore/dubstep" activeClassName="selected-genre">Dubstep</NavLink></li>
           <li><NavLink to="/explore/pop" activeClassName="selected-genre">Pop</NavLink></li>
-          <li><NavLink to="/explore/indie" activeClassName="selected-genre">Indie</NavLink></li>
-          <li><NavLink to="/explore/deep" activeClassName="selected-genre">Deep</NavLink></li>
-          <li><NavLink to="/explore/hiphop" activeClassName="selected-genre">HipHop</NavLink></li>
+          <li><NavLink to="/explore/circuit" activeClassName="selected-genre">Circuit</NavLink></li>
+          <li><NavLink to="/explore/offernissim" activeClassName="selected-genre">Offer Nissim</NavLink></li>
+          <li><NavLink to="/explore/sagikariv" activeClassName="selected-genre">Sagi Kariv</NavLink></li>
         </ul>
       </div>
     )
   }
 
   render(props) {
-    console.info('I was rendered');
-    console.info('are there playlist here? im EXPLORE', props);
     const isFirstPage = this.state.offset === 0;
 
     switch (this.state.loadingState) {
@@ -90,15 +89,20 @@ export default class Explore extends React.Component {
       case 'error':
         return <div>Error!</div>;
       case 'loaded':
-        return <div className="main">
+        return <div className="explore">
           <nav>
             {this.genreChooser()}
           </nav>
-          <div>
+          <div className="songs-list-div">
             <ul className="songs-list">
             {this.state.songs.map((song) => <li key={song.id}>
-              <CreateSong song={song} updateCurrentTrack={this.props.updateCurrentTrack}/>
-            </li>)}
+              <CreateSong song={song}
+                          mode="explore"
+                          updateCurrentTrack={this.props.updateCurrentTrack}
+                          playlists={this.props.playlists}
+                          addNewPlaylist={this.props.addNewPlaylist}
+                          addSongToPlaylist = {this.props.addSongToPlaylist}/>
+                          </li>)}
             </ul>
           </div>
 

@@ -1,0 +1,63 @@
+// ========================== ADD TO PLAYLIST DROPDOWN ===================
+
+.add-playlist-dropdown {
+  width: 130px;
+  background: #FFFFFF;
+  box-shadow: 0 1px 4px 0 rgba(0,0,0,0.37);
+  position: absolute;
+  right: 0px;
+  top: 18px;
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+  z-index: 8;
+}
+
+.add-edit-div span {
+  font-family: Roboto-Bold;
+  font-size: 11px;
+  color: #4A4A4A;
+}
+
+.add-edit-div a {
+  font-family: Roboto-Regular;
+  font-size: 9px;
+  color: #2196F3;
+  display: block;
+  margin-top: 2px;
+}
+
+.add-edit-div {
+  margin-left: 10px;
+  margin-bottom: 10px;
+}
+
+.playlist-checkbox-div {
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+}
+
+.playlist-checkbox-div .label {
+  font-family: Roboto-Regular;
+  font-size: 9px;
+  color: #4A4A4A;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  margin-bottom: 5px;
+}
+
+.playlist-checkbox-div input {
+  margin-right: 4px;
+}
+
+.heart-playlist-div {
+  position: absolute;
+  right: 7px;
+  bottom: 1px;
+}
+
+.heart-font {
+  color: #2196F3;
+}
