@@ -1,18 +1,20 @@
 import './player.scss';
 
-
 import React from 'react';
-
+import store from '../../store'
 
 export default function Player(props) {
-  if (!props.song) {
+  const storeData = store.getState();
+  console.info(storeData);
+
+  if (!storeData.currentTrack) {
     return <div className="player shifted"/>
   }
 
-  const songUrl = `${props.song.stream_url}?client_id=2t9loNQH90kzJcsFCODdigxfp325aq4z`;
+  console.info('storeData.CurrentTrack', storeData.currentTrack);
+  const songUrl = `${storeData.currentTrack.stream_url}?client_id=2t9loNQH90kzJcsFCODdigxfp325aq4z`;
   const songImage = props.song.artwork_url ? props.song.artwork_url : null;
   const songName = props.song.title;
-
   return (
     <div className="player">
 

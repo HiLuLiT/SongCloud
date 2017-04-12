@@ -1,7 +1,7 @@
 import './createsong.scss';
 import {Link} from 'react-router-dom';
 import React from 'react';
-
+import store from '../../store'
 export default class CreateSong extends React.Component {
   constructor() {
     super();
@@ -64,18 +64,25 @@ export default class CreateSong extends React.Component {
     }
   }
 
+  updateCurrentTrack(song) {
+    store.dispatch ({
+      type: 'UPDATE_CURRENT_TRACK',
+      song: song
+    })
+  }
+
   render() {
     const song = this.props.song;
     const imgURL = song.artwork_url ? song.artwork_url.replace('large', 't300x300') : song.artwork_url;
     const heartClassName = this.state.isDropDownOpen ? "fa fa-heart heart-font" : "fa fa-heart-o heart-font-o";
-    const handleHeart = this.state.isInPlaylist ? "fa fa-heart heart-font" : heartClassName;
+    const handleHeart = checkIfInPlaylist ? "fa fa-heart heart-font" : heartClassName;
     let checkIfInPlaylist = false;
 
     return (
       <div className="createsong">
         <div className="song-img"
              style={{'backgroundImage': `url(${imgURL})`}}
-             onClick={ () => this.props.updateCurrentTrack(song)}>
+             onClick={ () => this.updateCurrentTrack(song)}>
         </div>
         <span className="span-song-name">{this.songTitleLimiter(song.title)}</span>
         <div>
