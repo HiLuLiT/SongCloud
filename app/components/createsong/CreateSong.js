@@ -1,17 +1,17 @@
 import './createsong.scss';
 import {Link} from 'react-router-dom';
 import React from 'react';
-import store from '../../store'
-export default class CreateSong extends React.Component {
+import {connect} from 'react-redux';
+
+class CreateSong extends React.Component {
   constructor() {
     super();
     this.state = {
       isDropDownOpen: false,
-      isInPlaylist: false
-
+      heartClass: "fa fa-heart-o heart-font-o"
     };
 
-    // this.removeSongFromPlaylist = this.removeSongFromPlaylist.bind(this);
+    this.handleChecked = this.handleChecked.bind(this);
   }
 
   songDuration(song) {
@@ -30,59 +30,74 @@ export default class CreateSong extends React.Component {
   }
 
   openDropDown() {
-    let newVisible = !this.state.isDropDownOpen;
-
     this.setState({
-      isDropDownOpen: newVisible
+      isDropDownOpen: !this.state.isDropDownOpen
     });
   }
 
   componentDidMount() {
-    // this.checkIfSongInPlaylist();
+    console.info('did mount');
+    this.handleHeart();
   }
-  //
-  // removeSongFromPlaylist() {
-  //   const playlists = this.props.playlists;
-  //   const songInPlaylist = this.props.song;
-  //   for (const playlist of playlists) {
-  //
-  //     for (const song of playlist.songs) {
-  //
-  //       if (songInPlaylist.id === song.id) {
-  //
-  //       }
-  //     }
-  //   }
-  // }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.state.isInPlaylist) {
-      this.heartElm.className="fa fa-heart heart-font"
-    }
-    else {
-      this.heartElm.className="fa fa-heart-o heart-font-o";
-    }
+    console.info('did update');
+   if ((prevState.isDropDownOpen === false) && (this.state.isDropDownOpen === true)) {
+     this.setState({
+       heartClass: "fa fa-heart heart-font"
+     });
+   }
+    if ((prevState.isDropDownOpen === true) && (this.state.isDropDownOpen === false)) {
+     this.setState({
+       heartClass: "fa fa-heart-o heart-font-o"
+     });
+      this.handleHeart();
+   }
   }
 
-  updateCurrentTrack(song) {
-    store.dispatch ({
-      type: 'UPDATE_CURRENT_TRACK',
-      song: song
+  handleHeart() {
+    return this.props.playlists.map((playlist) => {
+      playlist.songs.map((song)=> {
+        if (song.id === this.props.song.id) {
+          this.setState({
+            heartClass: "fa fa-heart heart-font"
+          });
+        }
+      })
+    })
+  }
+
+  handleChecked(event) {
+    const target = event.target.checked;
+    const listID = event.target.id;
+    this.props.handleSongsInPlaylist(target, this.props.song, listID)
+  }
+
+  renderCheckboxInDropDown() {
+    const song = this.props.song;
+    return this.props.playlists.map((playlist) => {
+      let checkIfInPlaylist = false;
+
+      playlist.songs.forEach((songInPlaylist) => {
+        if (songInPlaylist.id === song.id) {
+          checkIfInPlaylist = true;
+        }
+      });
+      return <label key={playlist.id} className="label">{playlist.title}
+        <input type="checkbox" defaultChecked={ checkIfInPlaylist } onChange={this.handleChecked} id={playlist.id}/>
+      </label>
     })
   }
 
   render() {
     const song = this.props.song;
     const imgURL = song.artwork_url ? song.artwork_url.replace('large', 't300x300') : song.artwork_url;
-    const heartClassName = this.state.isDropDownOpen ? "fa fa-heart heart-font" : "fa fa-heart-o heart-font-o";
-    const handleHeart = checkIfInPlaylist ? "fa fa-heart heart-font" : heartClassName;
-    let checkIfInPlaylist = false;
 
     return (
       <div className="createsong">
         <div className="song-img"
              style={{'backgroundImage': `url(${imgURL})`}}
-             onClick={ () => this.updateCurrentTrack(song)}>
+             onClick={ () => this.props.updateCurrentTrack(song)}>
         </div>
         <span className="span-song-name">{this.songTitleLimiter(song.title)}</span>
         <div>
@@ -91,7 +106,7 @@ export default class CreateSong extends React.Component {
 
           <div className="heart-playlist-div">
             <i onClick={ () => this.openDropDown()}
-               className={ handleHeart }
+               className={ this.state.heartClass }
                aria-hidden="true"
                ref={(elm) => this.heartElm = elm}/>
 
@@ -106,20 +121,7 @@ export default class CreateSong extends React.Component {
               {(this.props.mode === 'playlists') && <span>Edit Playlist</span>}
 
               <div className="playlist-checkbox-div">
-                {this.props.playlists.map((playlist) => {
-                  checkIfInPlaylist = false;
-                    playlist.songs.map((songInPlaylist) => {
-                      if (songInPlaylist.id === song.id) {
-                        checkIfInPlaylist = true;
-                      }
-                    });
-
-                    return <label key={playlist.id} className="label"
-                                  onClick={() => this.props.addSongToPlaylist(playlist.id, song)}>{playlist.title}
-                      <input type="checkbox" defaultChecked={ checkIfInPlaylist }/>
-                    </label>
-                  })
-                }
+                { this.renderCheckboxInDropDown() }
               </div>
             </div>
             }
@@ -131,3 +133,35 @@ export default class CreateSong extends React.Component {
     )
   }
 }
+
+function mapDispatchToProps(dispatch) {
+  return {
+    updateCurrentTrack(song) {
+      dispatch({
+        type: 'UPDATE_CURRENT_TRACK',
+        song: song
+      })
+    },
+    addNewPlaylist(song) {
+      dispatch({
+        type: 'ADD_NEW_PLAYLIST',
+        song: song
+      })
+    },
+    handleSongsInPlaylist(isChecked, song, listID) {
+      dispatch({
+        type: 'UPDATE_SONGS_IN_PLAYLIST',
+        song: song,
+        playlistID: listID,
+        isChecked: isChecked
+      })
+    }
+  }
+}
+
+function mapStateToProps(stateData) {
+  return {
+    playlists: stateData.playlists
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(CreateSong);

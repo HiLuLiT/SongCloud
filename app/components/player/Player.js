@@ -1,20 +1,17 @@
 import './player.scss';
 
 import React from 'react';
-import store from '../../store'
+import { connect } from 'react-redux';
 
-export default function Player(props) {
-  const storeData = store.getState();
-  console.info(storeData);
 
-  if (!storeData.currentTrack) {
+function Player(props) {
+  if (!props.currentTrack) {
     return <div className="player shifted"/>
   }
 
-  console.info('storeData.CurrentTrack', storeData.currentTrack);
-  const songUrl = `${storeData.currentTrack.stream_url}?client_id=2t9loNQH90kzJcsFCODdigxfp325aq4z`;
-  const songImage = props.song.artwork_url ? props.song.artwork_url : null;
-  const songName = props.song.title;
+  const songUrl = `${props.currentTrack.stream_url}?client_id=2t9loNQH90kzJcsFCODdigxfp325aq4z`;
+  const songImage = props.currentTrack.artwork_url ? props.currentTrack.artwork_url : null;
+  const songName = props.currentTrack.title;
   return (
     <div className="player">
 
@@ -33,3 +30,11 @@ export default function Player(props) {
     </div>
   );
 };
+
+function mapStateToProps(stateData) {
+  return {
+    currentTrack: stateData.currentTrack
+  }
+}
+
+export default connect(mapStateToProps)(Player);

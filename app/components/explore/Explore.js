@@ -68,7 +68,7 @@ export default class Explore extends React.Component {
         <ul className="genre-nav">
           <li><NavLink to="/explore/trance" activeClassName="selected-genre">Trance</NavLink></li>
           <li><NavLink to="/explore/house" activeClassName="selected-genre">House</NavLink></li>
-          <li><NavLink to="/explore/dubstep" activeClassName="selected-genre">Dubstep</NavLink></li>
+          <li><NavLink to="/explore/yinonyahel" activeClassName="selected-genre">yinon yahel</NavLink></li>
           <li><NavLink to="/explore/pop" activeClassName="selected-genre">Pop</NavLink></li>
           <li><NavLink to="/explore/circuit" activeClassName="selected-genre">Circuit</NavLink></li>
           <li><NavLink to="/explore/offernissim" activeClassName="selected-genre">Offer Nissim</NavLink></li>
@@ -101,7 +101,7 @@ export default class Explore extends React.Component {
                           updateCurrentTrack={this.props.updateCurrentTrack}
                           playlists={this.props.playlists}
                           addNewPlaylist={this.props.addNewPlaylist}
-                          addSongToPlaylist = {this.props.addSongToPlaylist}/>
+                          addSongToPlaylist= {this.props.addSongToPlaylist}/>
                           </li>)}
             </ul>
           </div>

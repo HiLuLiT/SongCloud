@@ -2,14 +2,17 @@ import './playlists.scss';
 
 import React from 'react';
 import Playlist from '../playlist/Playlist';
+import {connect} from 'react-redux';
 
-export default function Playlists(props) {
+function Playlists(props) {
+  console.info('props from PLAYLISTS', props);
   return (
     <div className="playlists">
       <div className="left-nav">
         <div className="btn-div">
           <button className="new-playlist-btn"
-                  onClick={ () => props.addNewPlaylist()}>Add New Playlist</button>
+                  onClick={ () => props.addNewPlaylist()}>Add New Playlist
+          </button>
         </div>
         <ul className="left-list">
           {props.playlists.map((playlist) => <li key={playlist.id}>
@@ -20,15 +23,40 @@ export default function Playlists(props) {
 
       <div className="playlist-explore">
         {props.playlists.map((playlist, i) => <Playlist key={playlist.id}
-                                                     isNewPlayList={props.addedNewPlaylist && i === props.playlists.length - 1}
-                                                     playlist={playlist}
-                                                     playlists={props.playlists}
-                                                     updateCurrentTrack={props.updateCurrentTrack}
-                                                     editPlaylistTitle={props.editPlaylistTitle}/>
-          )}
+                                                        isNewPlayList={props.addedNewPlaylist && i === props.playlists.length - 1}
+                                                        playlist={playlist}
+                                                        playlists={props.playlists}/>
+        )}
       </div>
 
 
     </div>
   )
 };
+
+
+function mapDispatchToProps(dispatch) {
+  return {
+    addNewPlaylist(song) {
+      dispatch({
+        type: 'IS_NEW_LIST',
+        isNewPlaylist: true
+      });
+
+      dispatch({
+        type: 'ADD_NEW_PLAYLIST',
+        song: song,
+      })
+    }
+  }
+}
+
+
+function mapStateToProps(stateData) {
+  return {
+    playlists: stateData.playlists
+  }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Playlists);

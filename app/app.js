@@ -7,13 +7,11 @@ import ReactDOM from 'react-dom';
 import React from 'react';
 import Routes from './components/routes/Routes'
 import store from './store';
+import { Provider } from 'react-redux';
 
-function renderApp() {
-  ReactDOM.render(<Routes/>, document.querySelector('#root'));
-}
-
-renderApp();
-
-store.subscribe(() => {
-  renderApp();
-});
+ReactDOM.render(
+  <Provider store={ store }>
+    <Routes />
+  </Provider>,
+  document.querySelector('#root')
+);

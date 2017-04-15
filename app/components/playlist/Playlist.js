@@ -1,14 +1,17 @@
 import './playlist.scss';
+import store from '../../store'
+import {connect} from 'react-redux';
 
 import React from 'react';
 import CreateSong from '../createsong/CreateSong';
 
 
-export default class Playlist extends React.Component {
+class Playlist extends React.Component {
   constructor(props) {
     super();
     this.state = {
       isInEditMode: false,
+      value: ''
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -18,16 +21,27 @@ export default class Playlist extends React.Component {
   //updating state with playlist title from props AFTER it finishes rendering -
   // if we update directly into state.value it will be undefined since it's still rendering
   componentDidMount() {
-    console.info('componentDidMount');
-    if (this.props.isNewPlayList) {
-      // this.nameElement.focus();
+    console.info('props from PLAYLIST', this.props);
+    this.setState ({
+      value: this.props.playlist.title
+    })
 
-      this.setState({
+    if (this.props.isNewPlaylist === true) {
+      this.setState ({
         isInEditMode: true
-      }, () => {
-        // call resetAddedPlaylist
-      });
+      })
     }
+    //   console.info('componentDidMount');
+    //   if (this.props.isNewPlayList) {
+    //     // this.nameElement.focus();
+    //
+    //     this.setState({
+    //       isInEditMode: true
+    //     }, () => {
+    //       // call resetAddedPlaylist
+    //     });
+    //   }
+    // }
   }
 
   inputEditMode() {
@@ -37,8 +51,12 @@ export default class Playlist extends React.Component {
   }
 
   handleChange(event) {
-    let newTitleValue = event.target.value;
-    this.props.editPlaylistTitle(this.props.playlist.id, newTitleValue);
+    let value = event.target.value;
+    let playlistId = this.props.playlist.id;
+    this.setState ({
+      value:value
+    })
+    this.props.editPlaylistTitle(value, playlistId);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -49,8 +67,6 @@ export default class Playlist extends React.Component {
   }
 
   render() {
-    console.info('componentRendered');
-    console.info(this.state.isInEditMode);
     const playlist = this.props.playlist;
 
     const inputClassName = this.state.isInEditMode ? '' : 'hidden';
@@ -65,7 +81,7 @@ export default class Playlist extends React.Component {
             <input onBlur={ () => this.inputEditMode() }
                    onChange={this.handleChange}
               // onkeydown={}
-                   value={this.props.playlist.title}
+                   value={this.state.value}
               // placeholder={playlist.title}
                    className={ inputClassName }
                    id={ playlist.id }
@@ -89,3 +105,26 @@ export default class Playlist extends React.Component {
     )
   }
 }
+
+function mapDispatchToProps(dispatch) {
+  return {
+    editPlaylistTitle(event, Id) {
+      console.info(event);
+      dispatch ({
+        type: 'EDIT_PLAYLIST_TITLE',
+        newTitle: event,
+        playlistId: Id,
+      })
+    }
+  }
+}
+
+function mapStateToProps(stateData) {
+  return {
+    playlists: stateData.playlists,
+    isNewPlaylist: stateData.isNewPlaylist
+  }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Playlist);
