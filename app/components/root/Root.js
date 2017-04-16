@@ -11,9 +11,6 @@ import Player from '../player/Player';
 export default class Root extends React.Component {
   constructor() {
     super();
-    this.state = {
-      addedNewPlaylist: false,
-    };
   }
 
   render() {
@@ -22,32 +19,19 @@ export default class Root extends React.Component {
       <div className="root">
         <Topbar/>
         <Switch>
-
           {/*{default routes}*/}
-
           <Route exact path="/" component={() => (
             <Redirect to="/explore"/>
           )}/>
 
+          {/*{App Routes}*/}
           <Route exact path="/explore" component={() => (
             <Redirect to="/explore/trance"/>
           )}/>
 
-          {/*{App Routes}*/}
+          <Route path="/explore/:genre" component={Explore}/>
 
-          {/*{we can't use component={explore} cause this way we can't give it properties}*/}
-          <Route path="/explore/:genre" render={ (props) => {
-            return <Explore playlists={this.state.playlists}
-                            addNewPlaylist={this.addNewPlaylist}
-                            {...props}/>
-          } }/>
-
-          <Route exact path="/playlists" render={(props) => {
-            return <Playlists playlists={this.state.playlists}
-                              addNewPlaylist={this.addNewPlaylist}
-                              addedNewPlaylist={this.state.addedNewPlaylist}
-                              {...props}/>
-          } }/>
+          <Route exact path="/playlists" component={Playlists}/>
 
 
         </Switch>
@@ -56,3 +40,10 @@ export default class Root extends React.Component {
     )
   }
 }
+
+
+{/*{App Routes}*/}
+{/*<Route path="/explore/:genre" render={ (props) => {*/}
+{/*return <Explore playlists={this.state.playlists}*/}
+{/*{...props}/>*/}
+{/*this is example before the Redux refactor - passing the component props: we didn't use component={explore} cause this way we     can't give it properties}*/}

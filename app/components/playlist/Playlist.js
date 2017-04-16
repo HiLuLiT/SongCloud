@@ -1,5 +1,4 @@
 import './playlist.scss';
-import store from '../../store'
 import {connect} from 'react-redux';
 
 import React from 'react';
@@ -17,62 +16,52 @@ class Playlist extends React.Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-
   //updating state with playlist title from props AFTER it finishes rendering -
   // if we update directly into state.value it will be undefined since it's still rendering
   componentDidMount() {
-    console.info('props from PLAYLIST', this.props);
-    this.setState ({
+    this.setState({
       value: this.props.playlist.title
-    })
+    });
 
     if (this.props.isNewPlaylist === true) {
-      this.setState ({
-        isInEditMode: true
+      this.setState({
+        isInEditMode: true,
       })
     }
-    //   console.info('componentDidMount');
-    //   if (this.props.isNewPlayList) {
-    //     // this.nameElement.focus();
-    //
-    //     this.setState({
-    //       isInEditMode: true
-    //     }, () => {
-    //       // call resetAddedPlaylist
-    //     });
-    //   }
-    // }
   }
 
   inputEditMode() {
     this.setState({
       isInEditMode: !this.state.isInEditMode
-    })
+    });
   }
 
   handleChange(event) {
     let value = event.target.value;
     let playlistId = this.props.playlist.id;
-    this.setState ({
-      value:value
-    })
+    this.setState({
+      value: value
+    });
     this.props.editPlaylistTitle(value, playlistId);
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    console.info('componentDidUpdate');
-    if (this.state.isInEditMode === true && prevState.isInEditMode === false) {
+  componentDidUpdate() {
+    if (this.state.isInEditMode === true) {
       this.nameElement.focus();
+      this.props.resetNewPlaylist();
+    }
+
+    if (this.props.playlist.id === this.props.scrollTo) {
+      this.playlistElm.scrollIntoView({block: "start", behavior: "smooth"});
     }
   }
 
   render() {
     const playlist = this.props.playlist;
-
     const inputClassName = this.state.isInEditMode ? '' : 'hidden';
     const titleClassName = this.state.isInEditMode ? 'hidden' : '';
     return (
-      <div className="playlist">
+      <div className="playlist" ref={(elm) => this.playlistElm = elm}>
         <div className="header-div">
           <div className="input-div">
             <label className={ titleClassName }
@@ -82,22 +71,20 @@ class Playlist extends React.Component {
                    onChange={this.handleChange}
               // onkeydown={}
                    value={this.state.value}
-              // placeholder={playlist.title}
                    className={ inputClassName }
                    id={ playlist.id }
                    type="text"
                    ref={ (element) => this.nameElement = element}>
             </input>
           </div>
-          <button className="del-btn">Delete</button>
+          <button onClick={ () => this.props.deletePlaylist(playlist.id)} className="del-btn">Delete</button>
         </div>
         <div>
           <ul className="songs-list">
             {playlist.songs.map((song) => <li key={song.id}>
               <CreateSong song={song}
                           mode="playlists"
-                          playlists={this.props.playlists}
-                          updateCurrentTrack={this.props.updateCurrentTrack}/>
+                          playlists={this.props.playlists}/>
             </li>)}
           </ul>
         </div>
@@ -109,15 +96,27 @@ class Playlist extends React.Component {
 function mapDispatchToProps(dispatch) {
   return {
     editPlaylistTitle(event, Id) {
-      console.info(event);
-      dispatch ({
+      dispatch({
         type: 'EDIT_PLAYLIST_TITLE',
         newTitle: event,
+        playlistId: Id,
+      });
+    },
+    resetNewPlaylist() {
+      dispatch({
+        type: 'IS_NEW_LIST',
+        isNewPlaylist: false,
+      })
+    },
+    deletePlaylist(Id) {
+      dispatch({
+        type: 'DELETE_PLAYLIST',
         playlistId: Id,
       })
     }
   }
 }
+
 
 function mapStateToProps(stateData) {
   return {

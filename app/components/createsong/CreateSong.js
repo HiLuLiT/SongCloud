@@ -36,12 +36,10 @@ class CreateSong extends React.Component {
   }
 
   componentDidMount() {
-    console.info('did mount');
     this.handleHeart();
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.info('did update');
    if ((prevState.isDropDownOpen === false) && (this.state.isDropDownOpen === true)) {
      this.setState({
        heartClass: "fa fa-heart heart-font"
@@ -107,8 +105,7 @@ class CreateSong extends React.Component {
           <div className="heart-playlist-div">
             <i onClick={ () => this.openDropDown()}
                className={ this.state.heartClass }
-               aria-hidden="true"
-               ref={(elm) => this.heartElm = elm}/>
+               aria-hidden="true"/>
 
             {/* Conditional Rendering with Logical Operator -  Returns expr1 if it can be converted to false; otherwise, returns expr2.*/}
             {this.state.isDropDownOpen && <div className="add-playlist-dropdown">
@@ -125,8 +122,6 @@ class CreateSong extends React.Component {
               </div>
             </div>
             }
-
-
           </div>
         </div>
       </div>
@@ -143,6 +138,11 @@ function mapDispatchToProps(dispatch) {
       })
     },
     addNewPlaylist(song) {
+      dispatch({
+        type:'IS_NEW_LIST',
+        isNewPlaylist: true
+      });
+
       dispatch({
         type: 'ADD_NEW_PLAYLIST',
         song: song

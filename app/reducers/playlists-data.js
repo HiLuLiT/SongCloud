@@ -45,10 +45,6 @@ const dummyData = [
 export default function playlistsDataReducer(playlists = dummyData, action) {
   let copyofPlayLists = [...playlists];
 
-  if (action.type ==='IS_NEW_LIST') {
-    return action.isNewPlaylist
-  }
-
   if (action.type === 'EDIT_PLAYLIST_TITLE') {
     for (const playlist of copyofPlayLists) {
       if (playlist.id === action.playlistId) {
@@ -72,25 +68,12 @@ export default function playlistsDataReducer(playlists = dummyData, action) {
           "artwork_url": "https://i1.sndcdn.com/artworks-000150027827-4exjil-large.jpg"
         }]
     };
-
     if (action.song) {
       newPlaylist.songs.pop();
       newPlaylist.songs.push(action.song);
     }
-
     copyofPlayLists.push(newPlaylist);
     return copyofPlayLists;
-
-    // this.setState({
-    //   playlists: copyofPlayLists,
-    //   addedNewPlaylist: true
-    // }, () => {
-    //   this.setState({
-    //     addedNewPlaylist: false
-    //   });
-    // });
-    // }
-
   }
 
   if (action.type === 'UPDATE_SONGS_IN_PLAYLIST') {
@@ -115,6 +98,19 @@ export default function playlistsDataReducer(playlists = dummyData, action) {
     }
   }
 
+  if (action.type === 'DELETE_PLAYLIST') {
+    for (const playlist of copyofPlayLists) {
+      console.info(action.playlistId);
+      if (playlist.id === action.playlistId) {
+        const indexOfList = copyofPlayLists.indexOf(playlist)
+        const isSure = confirm(`Are you sure you want to delete ${copyofPlayLists[indexOfList].title} ?`);
+        if (isSure === true) {
+          copyofPlayLists.splice(indexOfList, 1);
+          return copyofPlayLists;
+        }
+      }
+    }
+  }
 
-return playlists;
+  return playlists;
 }

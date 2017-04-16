@@ -4,53 +4,61 @@ import React from 'react';
 import Playlist from '../playlist/Playlist';
 import {connect} from 'react-redux';
 
-function Playlists(props) {
-  console.info('props from PLAYLISTS', props);
-  return (
-    <div className="playlists">
-      <div className="left-nav">
-        <div className="btn-div">
-          <button className="new-playlist-btn"
-                  onClick={ () => props.addNewPlaylist()}>Add New Playlist
-          </button>
+class Playlists extends React.Component {
+  constructor(props) {
+    super();
+    this.state = {
+      scrollTo: ''
+    };
+
+    this.handleScroll = this.handleScroll.bind(this)
+  }
+
+  handleScroll(playlist) {
+    this.setState ({
+      scrollTo:playlist.id
+    })
+  }
+
+  render() {
+    return (
+      <div className="playlists">
+        <div className="left-nav">
+          <div className="btn-div">
+            <button className="new-playlist-btn"
+                    onClick={ () => this.props.addNewPlaylist()}>Add New Playlist
+            </button>
+          </div>
+          <ul className="left-list">
+            {this.props.playlists.map((playlist) => <li key={playlist.id} onClick={ () => this.handleScroll(playlist)}>
+              {playlist.title}</li>
+            )}
+          </ul>
         </div>
-        <ul className="left-list">
-          {props.playlists.map((playlist) => <li key={playlist.id}>
-            {playlist.title}</li>
+        <div className="playlist-explore">
+          {this.props.playlists.map((playlist, i) => <Playlist key={playlist.id}
+                                                          playlist={playlist}
+                                                          scrollTo={this.state.scrollTo}/>
           )}
-        </ul>
+        </div>
       </div>
-
-      <div className="playlist-explore">
-        {props.playlists.map((playlist, i) => <Playlist key={playlist.id}
-                                                        isNewPlayList={props.addedNewPlaylist && i === props.playlists.length - 1}
-                                                        playlist={playlist}
-                                                        playlists={props.playlists}/>
-        )}
-      </div>
-
-
-    </div>
-  )
-};
-
+    )
+  }
+}
 
 function mapDispatchToProps(dispatch) {
   return {
-    addNewPlaylist(song) {
+    addNewPlaylist() {
       dispatch({
         type: 'IS_NEW_LIST',
         isNewPlaylist: true
       });
-
       dispatch({
         type: 'ADD_NEW_PLAYLIST',
-        song: song,
-      })
+      });
     }
-  }
+  };
 }
-
 
 function mapStateToProps(stateData) {
   return {
