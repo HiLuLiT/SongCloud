@@ -17,13 +17,17 @@ export default class Explore extends React.Component {
     };
   }
 
+
   getSongs() {
     const xhr = new XMLHttpRequest();
     const genre = this.props.match.params.genre;
     const offset = this.state.offset;
     const limit = this.state.limit;
 
-    xhr.open('GET', `https://api.soundcloud.com/tracks?client_id=2t9loNQH90kzJcsFCODdigxfp325aq4z&limit=${limit}&offset=${offset}&tags=${genre}`);
+    const searchParams = new URLSearchParams(this.props.location.search);
+    const searchTarget = searchParams.get('search') ? 'q' : 'tags';
+
+    xhr.open('GET', `https://api.soundcloud.com/tracks?client_id=2t9loNQH90kzJcsFCODdigxfp325aq4z&limit=${limit}&offset=${offset}&${searchTarget}=${genre}`);
 
     xhr.addEventListener('load', () => {
       this.setState({songs: JSON.parse(xhr.responseText), loadingState: 'loaded'});
@@ -100,8 +104,7 @@ export default class Explore extends React.Component {
                           mode="explore"
                           updateCurrentTrack={this.props.updateCurrentTrack}
                           playlists={this.props.playlists}
-                          addNewPlaylist={this.props.addNewPlaylist}
-                          addSongToPlaylist= {this.props.addSongToPlaylist}/>
+                          addNewPlaylist={this.props.addNewPlaylist}/>
                           </li>)}
             </ul>
           </div>

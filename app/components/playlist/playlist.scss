@@ -1,9 +1,12 @@
 // ========================= Playlist =============================
 
-
-
 .playlist {
   top: 84px;
+}
+
+.scroll-to {
+  position: absolute;
+  top: -30px;
 }
 
 .header-div {
@@ -42,4 +45,27 @@
   font-size: 13px;
   color: #F44336;
   background-color: white;
+}
+
+.input-div {
+  position: relative;
+}
+
+.counter-bg {
+  margin-left: 10px;
+  top: -8px;
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: #2196F3;
+  border-radius: 20px;
+  display: inline-block;
+  color: white;
+}
+
+.counter {
+  font-size: 10px;
+  position: absolute;
+  top: 5px;
+  left: 7px;
 }

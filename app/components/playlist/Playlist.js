@@ -10,10 +10,10 @@ class Playlist extends React.Component {
     super();
     this.state = {
       isInEditMode: false,
-      value: ''
+      value: '',
     };
 
-    this.handleChange = this.handleChange.bind(this);
+    this.handleTitleChange = this.handleTitleChange.bind(this);
   }
 
   //updating state with playlist title from props AFTER it finishes rendering -
@@ -28,6 +28,7 @@ class Playlist extends React.Component {
         isInEditMode: true,
       })
     }
+
   }
 
   inputEditMode() {
@@ -36,16 +37,72 @@ class Playlist extends React.Component {
     });
   }
 
-  handleChange(event) {
+  handleTitleChange(event) {
     let value = event.target.value;
     let playlistId = this.props.playlist.id;
     this.setState({
       value: value
     });
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', 'http://localhost:3000/edit-title');
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.addEventListener('load', () => {
+      console.log('loaded new title')
+    });
+
+    xhr.addEventListener('error', () => {
+      alert('problem!');
+    });
+
+    let data = {
+      value: value,
+      playlistId: playlistId
+    };
+
+    // update JSON on server
+    xhr.send(JSON.stringify(data));
+
+    // update store with reducer
     this.props.editPlaylistTitle(value, playlistId);
   }
 
-  componentDidUpdate() {
+
+  handleDeleteList(playlistID) {
+    const playlists = this.props.playlists;
+    for (const playlist of playlists) {
+      if (playlist.id === playlistID) {
+        const indexOfList = playlists.indexOf(playlist);
+        console.info('indexofList', indexOfList);
+        console.info('playlist',playlist);
+        const isSure = confirm(`Are you sure you want to delete ${playlists[indexOfList].title} ?`);
+        if (isSure === true) {
+
+          // update in store
+          this.props.deletePlaylist(indexOfList);
+
+          // update in server
+          const xhr = new XMLHttpRequest();
+          xhr.open('POST', 'http://localhost:3000/delete-list');
+          xhr.setRequestHeader('Content-Type', 'application/json');
+          xhr.addEventListener('load', () => {
+            console.log('loaded deleted list')
+          });
+          xhr.addEventListener('error', () => {
+            alert('problem!');
+          });
+
+          let data = {
+            indexOfList: indexOfList
+          };
+
+          xhr.send(JSON.stringify(data));
+        }
+      }
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
     if (this.state.isInEditMode === true) {
       this.nameElement.focus();
       this.props.resetNewPlaylist();
@@ -61,14 +118,15 @@ class Playlist extends React.Component {
     const inputClassName = this.state.isInEditMode ? '' : 'hidden';
     const titleClassName = this.state.isInEditMode ? 'hidden' : '';
     return (
-      <div className="playlist" ref={(elm) => this.playlistElm = elm}>
+      <div className="playlist">
+        <div className="scroll-to" ref={(elm) => this.playlistElm = elm}/>
         <div className="header-div">
           <div className="input-div">
             <label className={ titleClassName }
                    htmlFor={ playlist.id }
                    onClick={ () => this.inputEditMode() }>{ playlist.title }</label>
             <input onBlur={ () => this.inputEditMode() }
-                   onChange={this.handleChange}
+                   onChange={this.handleTitleChange}
               // onkeydown={}
                    value={this.state.value}
                    className={ inputClassName }
@@ -76,8 +134,11 @@ class Playlist extends React.Component {
                    type="text"
                    ref={ (element) => this.nameElement = element}>
             </input>
+            <div className="counter-bg">
+              <span className="counter">{ this.props.playlist.songs.length }</span>
+            </div>
           </div>
-          <button onClick={ () => this.props.deletePlaylist(playlist.id)} className="del-btn">Delete</button>
+          <button onClick={ () => this.handleDeleteList(playlist.id)} className="del-btn">Delete</button>
         </div>
         <div>
           <ul className="songs-list">
@@ -108,10 +169,10 @@ function mapDispatchToProps(dispatch) {
         isNewPlaylist: false,
       })
     },
-    deletePlaylist(Id) {
+    deletePlaylist(indexOfList) {
       dispatch({
         type: 'DELETE_PLAYLIST',
-        playlistId: Id,
+        indexOfList: indexOfList
       })
     }
   }

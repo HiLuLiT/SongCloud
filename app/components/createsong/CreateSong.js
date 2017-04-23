@@ -2,6 +2,7 @@ import './createsong.scss';
 import {Link} from 'react-router-dom';
 import React from 'react';
 import {connect} from 'react-redux';
+import uuid from 'uuid';
 
 class CreateSong extends React.Component {
   constructor() {
@@ -11,7 +12,7 @@ class CreateSong extends React.Component {
       heartClass: "fa fa-heart-o heart-font-o"
     };
 
-    this.handleChecked = this.handleChecked.bind(this);
+    this.handleCheckedPlaylist = this.handleCheckedPlaylist.bind(this);
   }
 
   songDuration(song) {
@@ -40,22 +41,22 @@ class CreateSong extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-   if ((prevState.isDropDownOpen === false) && (this.state.isDropDownOpen === true)) {
-     this.setState({
-       heartClass: "fa fa-heart heart-font"
-     });
-   }
+    if ((prevState.isDropDownOpen === false) && (this.state.isDropDownOpen === true)) {
+      this.setState({
+        heartClass: "fa fa-heart heart-font"
+      });
+    }
     if ((prevState.isDropDownOpen === true) && (this.state.isDropDownOpen === false)) {
-     this.setState({
-       heartClass: "fa fa-heart-o heart-font-o"
-     });
+      this.setState({
+        heartClass: "fa fa-heart-o heart-font-o"
+      });
       this.handleHeart();
-   }
+    }
   }
 
   handleHeart() {
     return this.props.playlists.map((playlist) => {
-      playlist.songs.map((song)=> {
+      playlist.songs.map((song) => {
         if (song.id === this.props.song.id) {
           this.setState({
             heartClass: "fa fa-heart heart-font"
@@ -65,10 +66,32 @@ class CreateSong extends React.Component {
     })
   }
 
-  handleChecked(event) {
+  handleCheckedPlaylist(event) {
     const target = event.target.checked;
     const listID = event.target.id;
-    this.props.handleSongsInPlaylist(target, this.props.song, listID)
+
+    // update store with reducer
+    this.props.handleSongsInPlaylist(target, this.props.song, listID);
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', 'http://localhost:3000/update-songs-in-playlists');
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.addEventListener('load', () => {
+      console.log('loaded new song')
+    });
+
+    xhr.addEventListener('error', () => {
+      alert('problem!');
+    });
+
+    let data = {
+      isChecked: target,
+      song: this.props.song,
+      listID: listID
+    };
+
+    // update JSON on server
+    xhr.send(JSON.stringify(data));
   }
 
   renderCheckboxInDropDown() {
@@ -82,9 +105,37 @@ class CreateSong extends React.Component {
         }
       });
       return <label key={playlist.id} className="label">{playlist.title}
-        <input type="checkbox" defaultChecked={ checkIfInPlaylist } onChange={this.handleChecked} id={playlist.id}/>
+        <input type="checkbox" checked={ checkIfInPlaylist } onChange={this.handleCheckedPlaylist} id={playlist.id}/>
       </label>
     })
+  }
+
+  handleAddingNewPlaylist(song) {
+    let newID = uuid();
+    let newPlaylist = {
+      id: newID,
+      title: 'UNTITLED',
+      songs: [song]
+    };
+
+
+    // update on server
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', 'http://localhost:3000/add-new-playlist-with-song');
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.addEventListener('load', () => {
+      console.log('loaded new playlist with song')
+    });
+
+    xhr.addEventListener('error', () => {
+      alert('problem!');
+    });
+
+    xhr.send(JSON.stringify(newPlaylist));
+
+    // update in store
+    console.info('newPlaylist in handle function', newPlaylist);
+    this.props.addNewPlaylist(newPlaylist);
   }
 
   render() {
@@ -111,7 +162,7 @@ class CreateSong extends React.Component {
             {this.state.isDropDownOpen && <div className="add-playlist-dropdown">
               { (this.props.mode === "explore") && <div className="add-edit-div">
                 <span>Add To Playlist</span>
-                <Link to="/playlists" onClick={() => this.props.addNewPlaylist(song)}>Create Playlist +</Link>
+                <Link to="/playlists" onClick={() => this.handleAddingNewPlaylist(song)}>Create Playlist +</Link>
 
               </div>
               }
@@ -137,15 +188,15 @@ function mapDispatchToProps(dispatch) {
         song: song
       })
     },
-    addNewPlaylist(song) {
+    addNewPlaylist(playlistData) {
       dispatch({
-        type:'IS_NEW_LIST',
+        type: 'IS_NEW_LIST',
         isNewPlaylist: true
       });
 
       dispatch({
         type: 'ADD_NEW_PLAYLIST',
-        song: song
+        newPlaylistData: playlistData
       })
     },
     handleSongsInPlaylist(isChecked, song, listID) {
