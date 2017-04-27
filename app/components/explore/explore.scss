@@ -66,6 +66,28 @@
   background-position: center;
 }
 
+.song-img i {
+  width: 200px;
+  height: 85px;
+  font-size: 50px;
+  text-align: center;
+  color: #FFFFFF;
+  line-height: 83px;
+  display: none;
+}
+
+.song-img span {
+  width: 200px;
+  height: 85px;
+  display: block;
+  &:hover {
+    background-color: rgba(0, 0, 0,0.7);
+  }
+  &:hover i {
+    display: block;
+  }
+}
+
 .span-song-name {
   font-size: 11px;
   color: #4A4A4A;

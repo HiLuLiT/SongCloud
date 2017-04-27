@@ -29,8 +29,8 @@ export default class Topbar extends React.Component {
           </NavLink>
           <nav>
             <ul className="nav-header">
-              <li><NavLink to="/explore" exact activeClassName="selected">Explore</NavLink></li>
-              <li><NavLink to="/playlists" exact activeClassName="selected">Playlists</NavLink></li>
+              <li><NavLink to="/explore" activeClassName="selected">Explore</NavLink></li>
+              <li><NavLink to="/playlists" activeClassName="selected">Playlists</NavLink></li>
             </ul>
           </nav>
         </div>

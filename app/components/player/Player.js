@@ -4,19 +4,49 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 
-function Player(props) {
-  if (!props.currentTrack) {
+class Player extends React.Component {
+  constructor() {
+    super();
+
+    this.onPlay = this.onPlay.bind(this);
+    this.onPause = this.onPause.bind(this);
+  }
+
+  componentDidUpdate() {
+    console.info('did update');
+    if (this.props.isPlaying === true) {
+      this.player.play();
+    }
+    if (this.props.isPlaying === false) {
+      this.player.pause();
+    }
+  }
+
+  onPlay() {
+    const playingmode= true;
+    this.props.handlePlayMode(playingmode)
+    console.info('THIS PROPS',this.props);
+  }
+
+  onPause() {
+    const playingmode= false;
+    this.props.handlePlayMode(playingmode)
+  }
+
+
+  render() {
+  if (!this.props.currentTrack) {
     return <div className="player shifted"/>
   }
 
-  const songUrl = `${props.currentTrack.stream_url}?client_id=2t9loNQH90kzJcsFCODdigxfp325aq4z`;
-  const songImage = props.currentTrack.artwork_url ? props.currentTrack.artwork_url : null;
-  const songName = props.currentTrack.title;
+  const songUrl = `${this.props.currentTrack.stream_url}?client_id=2t9loNQH90kzJcsFCODdigxfp325aq4z`;
+  const songImage = this.props.currentTrack.artwork_url ? this.props.currentTrack.artwork_url : null;
+  const songName = this.props.currentTrack.title;
+
   return (
     <div className="player">
-
       <div className="player-left-wrap">
-        <div className="player-img" style={{backgroundImage: `url(${songImage})`}}></div>
+        <div className="player-img" style={{backgroundImage: `url(${songImage})`}}/>
         <span className="song-name">{ songName }</span>
       </div>
 
@@ -24,17 +54,32 @@ function Player(props) {
         <audio className="player-elm"
                src={ songUrl }
                controls
-               autoPlay/>
+               ref={(elm) => {this.player = elm}}
+               onPlay={this.onPlay}
+               onPause={this.onPause}
+               />
       </div>
-
     </div>
-  );
-};
+  );}
+}
 
-function mapStateToProps(stateData) {
+
+function mapDispatchToProps(dispatch) {
   return {
-    currentTrack: stateData.currentTrack
+    handlePlayMode(playingmode) {
+      dispatch({
+        type: 'IS_IN_PLAY_MODE',
+        isPlaying: playingmode
+      })
+    },
   }
 }
 
-export default connect(mapStateToProps)(Player);
+function mapStateToProps(stateData) {
+  return {
+    currentTrack: stateData.currentTrack,
+    isPlaying: stateData.isInPlayMode
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Player);

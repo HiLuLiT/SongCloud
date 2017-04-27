@@ -73,8 +73,6 @@ class Playlist extends React.Component {
     for (const playlist of playlists) {
       if (playlist.id === playlistID) {
         const indexOfList = playlists.indexOf(playlist);
-        console.info('indexofList', indexOfList);
-        console.info('playlist',playlist);
         const isSure = confirm(`Are you sure you want to delete ${playlists[indexOfList].title} ?`);
         if (isSure === true) {
 

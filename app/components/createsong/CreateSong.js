@@ -9,7 +9,8 @@ class CreateSong extends React.Component {
     super();
     this.state = {
       isDropDownOpen: false,
-      heartClass: "fa fa-heart-o heart-font-o"
+      heartClass: "fa fa-heart-o heart-font-o",
+      isPlaying: false
     };
 
     this.handleCheckedPlaylist = this.handleCheckedPlaylist.bind(this);
@@ -38,6 +39,7 @@ class CreateSong extends React.Component {
 
   componentDidMount() {
     this.handleHeart();
+    console.info('did mount');
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -52,6 +54,7 @@ class CreateSong extends React.Component {
       });
       this.handleHeart();
     }
+    this.handlePlayIcon()
   }
 
   handleHeart() {
@@ -134,8 +137,31 @@ class CreateSong extends React.Component {
     xhr.send(JSON.stringify(newPlaylist));
 
     // update in store
-    console.info('newPlaylist in handle function', newPlaylist);
     this.props.addNewPlaylist(newPlaylist);
+  }
+
+  handlePlay(song) {
+    this.props.updateCurrentTrack(song);
+
+    if(this.props.isPlaying === true) {
+    const playingMode= false;
+    this.props.handlePlayMode(playingMode);
+    }
+
+    if(this.props.isPlaying === false) {
+      const playingMode= true;
+      this.props.handlePlayMode(playingMode);
+    }
+  }
+
+  handlePlayIcon() {
+    console.info('handle play icon');
+    if ((this.props.isPlaying === true) && (this.props.song === this.props.currentTrack)) {
+      this.icon.className = "fa fa-pause-circle-o";
+    }
+    if (this.props.isPlaying === false) {
+      this.icon.className = "fa fa-play-circle-o"
+    }
   }
 
   render() {
@@ -146,7 +172,12 @@ class CreateSong extends React.Component {
       <div className="createsong">
         <div className="song-img"
              style={{'backgroundImage': `url(${imgURL})`}}
-             onClick={ () => this.props.updateCurrentTrack(song)}>
+             onClick={ () => this.handlePlay(song)}>
+          <span>
+            <i className="fa fa-play-circle-o"
+               aria-hidden="true"
+               ref={(elm) => {this.icon = elm}}/>
+          </span>
         </div>
         <span className="span-song-name">{this.songTitleLimiter(song.title)}</span>
         <div>
@@ -182,6 +213,12 @@ class CreateSong extends React.Component {
 
 function mapDispatchToProps(dispatch) {
   return {
+    handlePlayMode(playingMode) {
+      dispatch({
+        type: 'IS_IN_PLAY_MODE',
+        isPlaying: playingMode
+      })
+    },
     updateCurrentTrack(song) {
       dispatch({
         type: 'UPDATE_CURRENT_TRACK',
@@ -212,7 +249,10 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(stateData) {
   return {
-    playlists: stateData.playlists
+    playlists: stateData.playlists,
+    isPlaying: stateData.isInPlayMode,
+    currentTrack: stateData.currentTrack
+
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(CreateSong);

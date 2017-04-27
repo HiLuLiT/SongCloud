@@ -59,7 +59,7 @@ class Playlists extends React.Component {
                       onClick={ () => this.handleScroll(playlist.id)}
                       onBlur={ () => this.handleScroll(null) }>
         {playlist.title}</li>
-    });
+    })
   }
 
   buildExplore() {
