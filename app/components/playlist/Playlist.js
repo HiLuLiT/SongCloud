@@ -45,7 +45,7 @@ class Playlist extends React.Component {
     });
 
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', 'http://localhost:3000/edit-title');
+    xhr.open('POST', `${serverLocation}/edit-title`);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.addEventListener('load', () => {
       console.log('loaded new title')
@@ -81,7 +81,7 @@ class Playlist extends React.Component {
 
           // update in server
           const xhr = new XMLHttpRequest();
-          xhr.open('POST', 'http://localhost:3000/delete-list');
+          xhr.open('POST', `${serverLocation}/delete-list`);
           xhr.setRequestHeader('Content-Type', 'application/json');
           xhr.addEventListener('load', () => {
             console.log('loaded deleted list')

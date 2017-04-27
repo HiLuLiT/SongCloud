@@ -22,7 +22,7 @@ class Root extends React.Component {
   readData() {
     const xhr = new XMLHttpRequest();
 
-    xhr.open('GET', 'http://localhost:3000/playlists');
+    xhr.open('GET', `${serverLocation}/playlists`);
 
     xhr.addEventListener('load', () => {
       const playlist = JSON.parse(xhr.responseText);
