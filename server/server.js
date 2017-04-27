@@ -126,6 +126,7 @@ app.post('/add-new-playlist-with-song', (req, res) => {
 
 const path = require('path');
 app.get('/app.js', (req, res) => res.sendFile(path.resolve(__dirname, '../dist/app.js')));
+app.use('/_', express.static(path.resolve(__dirname, '../dist/_')));
 app.get('/**', (req, res) => res.sendFile(path.resolve(__dirname, '../dist/index.html')));
 
 // START THE SERVER
