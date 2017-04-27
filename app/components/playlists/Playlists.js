@@ -7,7 +7,7 @@ import {connect} from 'react-redux';
 
 
 class Playlists extends React.Component {
-  constructor(props) {
+  constructor() {
     super();
     this.state = {
       scrollTo: null
@@ -17,9 +17,6 @@ class Playlists extends React.Component {
     this.addNewPlaylistHandler = this.addNewPlaylistHandler.bind(this);
   }
 
-  // componentDidMount() {
-  //
-  // }
 
   handleScroll(playlistID) {
     this.setState({
@@ -53,7 +50,6 @@ class Playlists extends React.Component {
 
   buildLeftList() {
     const playlists = this.props.playlists;
-    console.info('playlist props in build left', this.props.playlists);
     return playlists.map((playlist) => {
                      return <li key={playlist.id}
                       onClick={ () => this.handleScroll(playlist.id)}

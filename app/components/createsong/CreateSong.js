@@ -39,7 +39,6 @@ class CreateSong extends React.Component {
 
   componentDidMount() {
     this.handleHeart();
-    console.info('did mount');
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -54,7 +53,6 @@ class CreateSong extends React.Component {
       });
       this.handleHeart();
     }
-    this.handlePlayIcon()
   }
 
   handleHeart() {
@@ -143,41 +141,34 @@ class CreateSong extends React.Component {
   handlePlay(song) {
     this.props.updateCurrentTrack(song);
 
-    if(this.props.isPlaying === true) {
-    const playingMode= false;
-    this.props.handlePlayMode(playingMode);
-    }
-
-    if(this.props.isPlaying === false) {
-      const playingMode= true;
+    if (this.props.isPlaying === true) {
+      const playingMode = false;
       this.props.handlePlayMode(playingMode);
     }
-  }
 
-  handlePlayIcon() {
-    console.info('handle play icon');
-    if ((this.props.isPlaying === true) && (this.props.song === this.props.currentTrack)) {
-      this.icon.className = "fa fa-pause-circle-o";
-    }
     if (this.props.isPlaying === false) {
-      this.icon.className = "fa fa-play-circle-o"
+      const playingMode = true;
+      this.props.handlePlayMode(playingMode);
     }
+
+    if ((this.props.isPlaying === true) && (this.props.currentTrack !== this.props.song)) {
+      const playingMode = true;
+      this.props.handlePlayMode(playingMode);
+    }
+
   }
 
   render() {
     const song = this.props.song;
     const imgURL = song.artwork_url ? song.artwork_url.replace('large', 't300x300') : song.artwork_url;
-
+    const playModeIcon = ((this.props.isPlaying === true) && (this.props.currentTrack === this.props.song)) ? "fa fa-pause-circle-o is-playing" : "fa fa-play-circle-o";
     return (
       <div className="createsong">
         <div className="song-img"
              style={{'backgroundImage': `url(${imgURL})`}}
              onClick={ () => this.handlePlay(song)}>
-          <span>
-            <i className="fa fa-play-circle-o"
-               aria-hidden="true"
-               ref={(elm) => {this.icon = elm}}/>
-          </span>
+          <span className={ playModeIcon }
+                aria-hidden="true"/>
         </div>
         <span className="span-song-name">{this.songTitleLimiter(song.title)}</span>
         <div>

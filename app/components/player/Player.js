@@ -13,7 +13,6 @@ class Player extends React.Component {
   }
 
   componentDidUpdate() {
-    console.info('did update');
     if (this.props.isPlaying === true) {
       this.player.play();
     }
@@ -23,14 +22,13 @@ class Player extends React.Component {
   }
 
   onPlay() {
-    const playingmode= true;
-    this.props.handlePlayMode(playingmode)
-    console.info('THIS PROPS',this.props);
+    const playingMode= true;
+    this.props.handlePlayMode(playingMode)
   }
 
   onPause() {
-    const playingmode= false;
-    this.props.handlePlayMode(playingmode)
+    const playingMode= false;
+    this.props.handlePlayMode(playingMode)
   }
 
 
@@ -57,6 +55,7 @@ class Player extends React.Component {
                ref={(elm) => {this.player = elm}}
                onPlay={this.onPlay}
                onPause={this.onPause}
+               autoPlay
                />
       </div>
     </div>
@@ -66,10 +65,10 @@ class Player extends React.Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    handlePlayMode(playingmode) {
+    handlePlayMode(playingMode) {
       dispatch({
         type: 'IS_IN_PLAY_MODE',
-        isPlaying: playingmode
+        isPlaying: playingMode
       })
     },
   }

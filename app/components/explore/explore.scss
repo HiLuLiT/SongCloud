@@ -18,7 +18,7 @@
 
 .genre-nav li:hover {
   color: #2d2d11;
-  box-shadow: inset 0 -2px 0 #5CB3FF;
+  box-shadow: inset 0 -2px 0 #A6D2A5;
   transition: all .2s ease-in-out;
 }
 
@@ -67,25 +67,33 @@
 }
 
 .song-img i {
-  width: 200px;
-  height: 85px;
-  font-size: 50px;
-  text-align: center;
-  color: #FFFFFF;
-  line-height: 83px;
-  display: none;
+  //width: 200px;
+  //height: 85px;
+
+  //display: none;
 }
 
 .song-img span {
   width: 200px;
   height: 85px;
   display: block;
+  font-size: 50px;
+  text-align: center;
+  color: #FFFFFF;
+  line-height: 83px;
+  opacity: 0;
   &:hover {
     background-color: rgba(0, 0, 0,0.7);
+    opacity: 1;
   }
   &:hover i {
     display: block;
   }
+}
+
+.song-img .is-playing {
+  background-color: rgba(0, 0, 0,0.7);
+  opacity: 1;
 }
 
 .span-song-name {
