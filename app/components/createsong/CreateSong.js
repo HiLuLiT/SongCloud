@@ -75,7 +75,7 @@ class CreateSong extends React.Component {
     this.props.handleSongsInPlaylist(target, this.props.song, listID);
 
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', 'http://localhost:3000/update-songs-in-playlists');
+    xhr.open('POST', `${serverLocation}/update-songs-in-playlists`);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.addEventListener('load', () => {
       console.log('loaded new song')
@@ -122,7 +122,7 @@ class CreateSong extends React.Component {
 
     // update on server
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', 'http://localhost:3000/add-new-playlist-with-song');
+    xhr.open('POST', `${serverLocation}/add-new-playlist-with-song`);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.addEventListener('load', () => {
       console.log('loaded new playlist with song')

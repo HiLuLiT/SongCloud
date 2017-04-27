@@ -6,6 +6,10 @@ const cors = require('cors')
 const fs = require('fs')
 const bodyParser = require('body-parser')
 
+const os = require('os');
+
+fs.writeFileSync(os.tmpdir() + '/playlists.json', fs.readFileSync(__dirname + '/playlists.json'));
+
 const app = express();
 const port = process.env.PORT || 3000;
 app.use(cors({
@@ -28,12 +32,12 @@ app.use(bodyParser.json());
 app.get('/playlists', (req, res) => {
 
   // we read the file as a string
-  const data = fs.readFileSync(__dirname + '/playlists.json')
+  const data = fs.readFileSync(os.tmpdir() + '/playlists.json')
 
   // we RECEIVE THE RESPONSE of the request - a stringed JSON file
   res.send(data)
 
-  // res.sendFile( __dirname + '/playlists.json');
+  // res.sendFile( os.tmpdir() + '/playlists.json');
   // res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
 });
 
@@ -43,7 +47,7 @@ app.get('/playlists', (req, res) => {
 app.post('/add-new-playlist', (req, res) => {
 
   // in order to make changes we first need to read the JSON file:
-  const data = fs.readFileSync(__dirname + '/playlists.json');
+  const data = fs.readFileSync(os.tmpdir() + '/playlists.json');
 
   // we then PARSE it, in order to make it an object
   const playlists = JSON.parse(data);
@@ -52,7 +56,7 @@ app.post('/add-new-playlist', (req, res) => {
   playlists.push(req.body);
 
   // now we write it back to playlists.json
-  fs.writeFileSync(__dirname + '/playlists.json', JSON.stringify(playlists));
+  fs.writeFileSync(os.tmpdir() + '/playlists.json', JSON.stringify(playlists));
 
   //and send
   res.send('OK');
@@ -60,7 +64,7 @@ app.post('/add-new-playlist', (req, res) => {
 
 app.post('/edit-title', (req, res) => {
   // shorthand:
-  const playlists = JSON.parse(fs.readFileSync(__dirname + '/playlists.json'));
+  const playlists = JSON.parse(fs.readFileSync(os.tmpdir() + '/playlists.json'));
 
   const reqBody = req.body;
   for (const playlist of playlists) {
@@ -68,14 +72,14 @@ app.post('/edit-title', (req, res) => {
       playlist.title = reqBody.value;
     }
   }
-  fs.writeFileSync(__dirname + '/playlists.json', JSON.stringify(playlists));
+  fs.writeFileSync(os.tmpdir() + '/playlists.json', JSON.stringify(playlists));
   res.send('OK');
 
 });
 
 app.post('/update-songs-in-playlists', (req, res) => {
   // shorthand:
-  const playlists = JSON.parse(fs.readFileSync(__dirname + '/playlists.json'));
+  const playlists = JSON.parse(fs.readFileSync(os.tmpdir() + '/playlists.json'));
 
   const reqBody = req.body;
   if (reqBody.isChecked === true) {
@@ -94,32 +98,36 @@ app.post('/update-songs-in-playlists', (req, res) => {
     }
   }
 
-  fs.writeFileSync(__dirname + '/playlists.json', JSON.stringify(playlists));
+  fs.writeFileSync(os.tmpdir() + '/playlists.json', JSON.stringify(playlists));
   res.send('OK');
 
 });
 
 app.post('/delete-list', (req, res) => {
   // shorthand:
-  const playlists = JSON.parse(fs.readFileSync(__dirname + '/playlists.json'));
+  const playlists = JSON.parse(fs.readFileSync(os.tmpdir() + '/playlists.json'));
   const reqBody = req.body;
 
   playlists.splice(reqBody.indexOfList, 1);
-  fs.writeFileSync(__dirname + '/playlists.json', JSON.stringify(playlists));
+  fs.writeFileSync(os.tmpdir() + '/playlists.json', JSON.stringify(playlists));
   res.send('OK');
 });
 
 app.post('/add-new-playlist-with-song', (req, res) => {
   // shorthand:
-  const playlists = JSON.parse(fs.readFileSync(__dirname + '/playlists.json'));
+  const playlists = JSON.parse(fs.readFileSync(os.tmpdir() + '/playlists.json'));
   const reqBody = req.body;
   console.info(reqBody);
   playlists.push(reqBody);
 
-  fs.writeFileSync(__dirname + '/playlists.json', JSON.stringify(playlists));
+  fs.writeFileSync(os.tmpdir() + '/playlists.json', JSON.stringify(playlists));
   res.send('OK');
 });
 
+const path = require('path');
+app.get('/app.js', (req, res) => res.sendFile(path.resolve(__dirname, '../dist/app.js')));
+app.use('/_', express.static(path.resolve(__dirname, '../dist/_')));
+app.get('/**', (req, res) => res.sendFile(path.resolve(__dirname, '../dist/index.html')));
 
 // START THE SERVER
 // ==============================================
