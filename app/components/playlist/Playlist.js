@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 
 import React from 'react';
 import CreateSong from '../createsong/CreateSong';
-
+import {serverLocation} from '../../serverLocation';
 
 class Playlist extends React.Component {
   constructor(props) {
@@ -48,7 +48,6 @@ class Playlist extends React.Component {
     xhr.open('POST', `${serverLocation}/edit-title`);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.addEventListener('load', () => {
-      console.log('loaded new title')
     });
 
     xhr.addEventListener('error', () => {
@@ -105,10 +104,6 @@ class Playlist extends React.Component {
       this.nameElement.focus();
       this.props.resetNewPlaylist();
     }
-
-    if (this.props.playlist.id === this.props.scrollTo) {
-      this.playlistElm.scrollIntoView({block: "start", behavior: "smooth"});
-    }
   }
 
   render() {
@@ -117,7 +112,6 @@ class Playlist extends React.Component {
     const titleClassName = this.state.isInEditMode ? 'hidden' : '';
     return (
       <div className="playlist">
-        <div className="scroll-to" ref={(elm) => this.playlistElm = elm}/>
         <div className="header-div">
           <div className="input-div">
             <label className={ titleClassName }
@@ -125,7 +119,6 @@ class Playlist extends React.Component {
                    onClick={ () => this.inputEditMode() }>{ playlist.title }</label>
             <input onBlur={ () => this.inputEditMode() }
                    onChange={this.handleTitleChange}
-              // onkeydown={}
                    value={this.state.value}
                    className={ inputClassName }
                    id={ playlist.id }

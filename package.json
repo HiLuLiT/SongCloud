@@ -6,7 +6,8 @@
     "start": "node server/server.js",
     "start:dev": "webpack-dev-server --hot --progress",
     "build": "NODE_ENV=production webpack -p --progress",
-    "buildwin": "set NODE_ENV=production&webpack -p --progress"
+    "buildwin": "set NODE_ENV=production&webpack -p --progress",
+    "test": "webpack-dev-server --hot --progress"
   },
   "license": "ISC",
   "dependencies": {
@@ -23,7 +24,6 @@
     "react-router-dom": "4.0.0",
     "redux": "3.6.0",
     "roboto-fontface": "0.7.0",
-    "smoothscroll-polyfill": "0.3.5",
     "surface": "github:mildrenben/surface",
     "uuid": "3.0.1"
   },

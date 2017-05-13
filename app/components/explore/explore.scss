@@ -18,7 +18,7 @@
 
 .genre-nav li:hover {
   color: #2d2d11;
-  box-shadow: inset 0 -2px 0 #A6D2A5;
+  box-shadow: inset 0 -2px 0 #2196F3;
   transition: all .2s ease-in-out;
 }
 
@@ -31,6 +31,10 @@
 
 .genre-nav li a {
   color: #4A4A4A;
+}
+
+.genre-nav li:first-child {
+  border-left: 1px solid lightgrey;
 }
 
 .songs-list {
@@ -142,4 +146,6 @@
   width: 100%;
   justify-content: center;
   align-content: center;
+  padding-top: 30px;
+  padding-bottom: 10px;
 }

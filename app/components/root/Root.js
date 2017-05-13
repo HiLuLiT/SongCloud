@@ -8,6 +8,7 @@ import Topbar from '../topbar/Topbar';
 import Explore from '../explore/Explore';
 import Playlists from '../playlists/Playlists';
 import Player from '../player/Player';
+import {serverLocation} from '../../serverLocation';
 
 class Root extends React.Component {
   constructor() {

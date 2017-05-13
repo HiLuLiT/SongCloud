@@ -1,46 +1,46 @@
 import uuid from 'uuid';
 
-// const dummyData = [
-//   {
-//     id: uuid(),
-//     title: 'My 1st Playlist',
-//     songs: [
-//       {
-//         id: 250711755,
-//         title: "The Chainsmokers - Don't Let Me Down (Illenium Remix)",
-//         duration: 219082,
-//         stream_url: "https://api.soundcloud.com/tracks/250711755/stream",
-//         uri: "https://api.soundcloud.com/tracks/250711755",
-//         artwork_url: "https://i1.sndcdn.com/artworks-000150027827-4exjil-large.jpg"
-//       }]
-//   },
-//   {
-//     id: uuid(),
-//     title: 'My 2nd Playlist',
-//     songs: [
-//       {
-//         "id": 250711755,
-//         "title": "The Chainsmokers - Don't Let Me Down (Illenium Remix)",
-//         "duration": 219082,
-//         "stream_url": "https://api.soundcloud.com/tracks/250711755/stream",
-//         "uri": "https://api.soundcloud.com/tracks/250711755",
-//         "artwork_url": "https://i1.sndcdn.com/artworks-000150027827-4exjil-large.jpg"
-//       }]
-//   },
-//   {
-//     id: uuid(),
-//     title: 'My 3rd Playlist',
-//     songs: [
-//       {
-//         "id": 250711755,
-//         "title": "The Chainsmokers - Don't Let Me Down (Illenium Remix)",
-//         "duration": 219082,
-//         "stream_url": "https://api.soundcloud.com/tracks/250711755/stream",
-//         "uri": "https://api.soundcloud.com/tracks/250711755",
-//         "artwork_url": "https://i1.sndcdn.com/artworks-000150027827-4exjil-large.jpg"
-//       }]
-//   },
-// ];
+const dummyData = [
+  {
+    id: uuid(),
+    title: 'My 1st Playlist',
+    songs: [
+      {
+        id: 250711755,
+        title: "The Chainsmokers - Don't Let Me Down (Illenium Remix)",
+        duration: 219082,
+        stream_url: "https://api.soundcloud.com/tracks/250711755/stream",
+        uri: "https://api.soundcloud.com/tracks/250711755",
+        artwork_url: "https://i1.sndcdn.com/artworks-000150027827-4exjil-large.jpg"
+      }]
+  },
+  {
+    id: uuid(),
+    title: 'My 2nd Playlist',
+    songs: [
+      {
+        "id": 250711755,
+        "title": "The Chainsmokers - Don't Let Me Down (Illenium Remix)",
+        "duration": 219082,
+        "stream_url": "https://api.soundcloud.com/tracks/250711755/stream",
+        "uri": "https://api.soundcloud.com/tracks/250711755",
+        "artwork_url": "https://i1.sndcdn.com/artworks-000150027827-4exjil-large.jpg"
+      }]
+  },
+  {
+    id: uuid(),
+    title: 'My 3rd Playlist',
+    songs: [
+      {
+        "id": 250711755,
+        "title": "The Chainsmokers - Don't Let Me Down (Illenium Remix)",
+        "duration": 219082,
+        "stream_url": "https://api.soundcloud.com/tracks/250711755/stream",
+        "uri": "https://api.soundcloud.com/tracks/250711755",
+        "artwork_url": "https://i1.sndcdn.com/artworks-000150027827-4exjil-large.jpg"
+      }]
+  },
+];
 
 export default function playlistsDataReducer(playlists = [], action) {
   let copyofPlayLists = [...playlists];
@@ -62,7 +62,6 @@ export default function playlistsDataReducer(playlists = [], action) {
   }
 
   if (action.type === 'ADD_NEW_PLAYLIST') {
-    console.info();
     copyofPlayLists.push(action.newPlaylistData);
     return copyofPlayLists;
   }

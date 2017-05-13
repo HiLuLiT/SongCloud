@@ -23,12 +23,19 @@ a:active {
   box-sizing: inherit;
 }
 
-.root, #root {
-  height: 100%;
-  width: 100%;
+#root {
+  height: 100vh;
+  width: 100vw;
+}
+
+.root {
+  margin-bottom: 64px;
+  height: 100vh;
+  width: 100vw;
 }
 
 .explore {
+  height: calc(100% - 60px);
   padding-top: 64px;
 }
 

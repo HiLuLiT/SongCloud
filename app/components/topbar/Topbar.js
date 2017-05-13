@@ -21,7 +21,6 @@ export default class Topbar extends React.Component {
   render() {
     return (
       <div className="topbar">
-
         <div className="logo-title-div">
           <NavLink to="/">
             <i className="fa fa-mixcloud cloud-logo-topbar" aria-hidden="true"/>
@@ -37,14 +36,12 @@ export default class Topbar extends React.Component {
 
         <div className="right-top-bar-div">
           <form className="search-div" onSubmit={this.searchSubmit}>
-            <button type="submit" className="fa fa-search search-font" aria-hidden="true"/>
+            <button type="submit" className="fa fa-search search-font" aria-hidden="true" onClick={this.searchSubmit}/>
             <input ref={(search) => this.search = search}
                    className="input-field"
                    type="search"
                    placeholder="SEARCH"/>
           </form>
-
-          <NavLink to="/signin" className="log-out-btn">Logout</NavLink>
         </div>
       </div>
     );

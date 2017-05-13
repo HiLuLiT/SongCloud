@@ -1,6 +1,7 @@
 // ========================= Topbar =============================
 
 .topbar {
+  top: 0;
   position: fixed;
   background-color: #2196F3;
   display: flex;
@@ -21,7 +22,8 @@
   border: 1px solid #D8D8D8;
   border-radius: 25px;
   background-color: #1E88E5;
-  width: 235px;
+  width: 270px;
+  margin-right: 20px;
 }
 
 .logo-title-div {
@@ -51,15 +53,19 @@
 }
 
 .nav-header {
-  margin-left: 40px;
+  margin: 0;
+  width: 180px;
   line-height: 64px;
+  display: flex;
+  justify-content: space-around;
 }
 
 .nav-header li a {
   display: inline-block;
   color: white;
   height: 64px;
-  //padding: 0 10px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 li .selected {
@@ -69,7 +75,6 @@ li .selected {
 
 .nav-header li {
   margin-top: 0;
-  margin-left: 20px;
   font-weight: 100;
   font-size: 15px;
   display: inline-block;

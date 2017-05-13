@@ -72,11 +72,11 @@ export default class Explore extends React.Component {
         <ul className="genre-nav">
           <li><NavLink to="/explore/trance" activeClassName="selected-genre">Trance</NavLink></li>
           <li><NavLink to="/explore/house" activeClassName="selected-genre">House</NavLink></li>
-          <li><NavLink to="/explore/yinonyahel" activeClassName="selected-genre">Yinon Yahel</NavLink></li>
+          <li><NavLink to="/explore/hiphop" activeClassName="selected-genre">Hip-Hop</NavLink></li>
           <li><NavLink to="/explore/pop" activeClassName="selected-genre">Pop</NavLink></li>
-          <li><NavLink to="/explore/circuit" activeClassName="selected-genre">Circuit</NavLink></li>
-          <li><NavLink to="/explore/offernissim" activeClassName="selected-genre">Offer Nissim</NavLink></li>
-          <li><NavLink to="/explore/sagikariv" activeClassName="selected-genre">Sagi Kariv</NavLink></li>
+          <li><NavLink to="/explore/rock" activeClassName="selected-genre">Rock</NavLink></li>
+          <li><NavLink to="/explore/dubstep" activeClassName="selected-genre">Dubstep</NavLink></li>
+          <li><NavLink to="/explore/electronic" activeClassName="selected-genre">Electronic</NavLink></li>
         </ul>
       </div>
     )

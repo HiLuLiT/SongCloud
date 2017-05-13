@@ -117,7 +117,6 @@ app.post('/add-new-playlist-with-song', (req, res) => {
   // shorthand:
   const playlists = JSON.parse(fs.readFileSync(os.tmpdir() + '/playlists.json'));
   const reqBody = req.body;
-  console.info(reqBody);
   playlists.push(reqBody);
 
   fs.writeFileSync(os.tmpdir() + '/playlists.json', JSON.stringify(playlists));

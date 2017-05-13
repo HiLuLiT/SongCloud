@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import React from 'react';
 import {connect} from 'react-redux';
 import uuid from 'uuid';
+import {serverLocation} from '../../serverLocation';
 
 class CreateSong extends React.Component {
   constructor() {
@@ -53,13 +54,16 @@ class CreateSong extends React.Component {
       });
       this.handleHeart();
     }
+    if (this.props.playlists !== prevProps.playlists) {
+      this.handleHeart();
+    }
   }
 
   handleHeart() {
-    return this.props.playlists.map((playlist) => {
+    this.props.playlists.map((playlist) => {
       playlist.songs.map((song) => {
         if (song.id === this.props.song.id) {
-          this.setState({
+          return  this.setState({
             heartClass: "fa fa-heart heart-font"
           });
         }
@@ -125,7 +129,6 @@ class CreateSong extends React.Component {
     xhr.open('POST', `${serverLocation}/add-new-playlist-with-song`);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.addEventListener('load', () => {
-      console.log('loaded new playlist with song')
     });
 
     xhr.addEventListener('error', () => {
@@ -155,7 +158,6 @@ class CreateSong extends React.Component {
       const playingMode = true;
       this.props.handlePlayMode(playingMode);
     }
-
   }
 
   render() {

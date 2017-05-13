@@ -11,19 +11,11 @@ class Playlists extends React.Component {
   constructor() {
     super();
     this.state = {
-      scrollTo: null
     };
 
-    this.handleScroll = this.handleScroll.bind(this);
     this.addNewPlaylistHandler = this.addNewPlaylistHandler.bind(this);
   }
 
-
-  handleScroll(playlistID) {
-    this.setState({
-      scrollTo: playlistID
-    })
-  }
 
   addNewPlaylistHandler() {
     let newID = uuid();
@@ -52,17 +44,14 @@ class Playlists extends React.Component {
   buildLeftList() {
     const playlists = this.props.playlists;
     return playlists.map((playlist) => {
-                     return <li key={playlist.id}
-                      onClick={ () => this.handleScroll(playlist.id)}
-                      onBlur={ () => this.handleScroll(null) }>
+                     return <li key={playlist.id}>
         {playlist.title}</li>
     })
   }
 
   buildExplore() {
     return this.props.playlists.map((playlist, i) => <Playlist key={playlist.id}
-                                                               playlist={playlist}
-                                                               scrollTo={this.state.scrollTo}/>
+                                                               playlist={playlist}/>
     )
   };
 
@@ -77,7 +66,6 @@ class Playlists extends React.Component {
           </div>
           <ul className="left-list">
             {this.buildLeftList()}
-
           </ul>
         </div>
         <div className="playlist-explore">
