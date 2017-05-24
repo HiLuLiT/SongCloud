@@ -40,13 +40,15 @@ export default class Explore extends React.Component {
 
   nextPage() {
     this.setState({
-      offset: this.state.offset + this.state.limit
+      offset: this.state.offset + this.state.limit,
+      loadingState: 'loading'
     })
   }
 
   prevPage() {
     this.setState({
-      offset: this.state.offset - this.state.limit
+      offset: this.state.offset - this.state.limit,
+      loadingState: 'loading'
     })
   }
 
@@ -56,6 +58,9 @@ export default class Explore extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.match.params.genre !== this.props.match.params.genre) {
+      this.setState({
+        loadingState: 'loading'
+      });
       this.setState({offset: 0}, () => {
         this.getSongs();
       });
@@ -82,7 +87,7 @@ export default class Explore extends React.Component {
     )
   }
 
-  render(props) {
+  render() {
     const isFirstPage = this.state.offset === 0;
 
     switch (this.state.loadingState) {

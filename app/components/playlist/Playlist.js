@@ -48,6 +48,8 @@ class Playlist extends React.Component {
     xhr.open('POST', `${serverLocation}/edit-title`);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.addEventListener('load', () => {
+      // update store with reducer
+      this.props.editPlaylistTitle(value, playlistId);
     });
 
     xhr.addEventListener('error', () => {
@@ -61,9 +63,6 @@ class Playlist extends React.Component {
 
     // update JSON on server
     xhr.send(JSON.stringify(data));
-
-    // update store with reducer
-    this.props.editPlaylistTitle(value, playlistId);
   }
 
 
@@ -75,15 +74,13 @@ class Playlist extends React.Component {
         const isSure = confirm(`Are you sure you want to delete ${playlists[indexOfList].title} ?`);
         if (isSure === true) {
 
-          // update in store
-          this.props.deletePlaylist(indexOfList);
-
           // update in server
           const xhr = new XMLHttpRequest();
           xhr.open('POST', `${serverLocation}/delete-list`);
           xhr.setRequestHeader('Content-Type', 'application/json');
           xhr.addEventListener('load', () => {
-            console.log('loaded deleted list')
+            // update in store
+            this.props.deletePlaylist(indexOfList);
           });
           xhr.addEventListener('error', () => {
             alert('problem!');
@@ -132,13 +129,19 @@ class Playlist extends React.Component {
           <button onClick={ () => this.handleDeleteList(playlist.id)} className="del-btn">Delete</button>
         </div>
         <div>
-          <ul className="songs-list">
+          { (playlist.songs.length === 0) && <ul className="songs-list">
+            <span className="add-songs-msg">Add some songs to this playlist</span>
+          </ul>
+          }
+          { (playlist.songs.length > 0) && <ul className="songs-list">
+
             {playlist.songs.map((song) => <li key={song.id}>
               <CreateSong song={song}
                           mode="playlists"
                           playlists={this.props.playlists}/>
             </li>)}
           </ul>
+          }
         </div>
       </div>
     )

@@ -29,7 +29,7 @@ class Playlists extends React.Component {
     xhr.open('POST', `${serverLocation}/add-new-playlist`);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.addEventListener('load', () => {
-      console.log('added new playlist')
+      this.props.addNewPlaylist(newPlaylist);
     });
 
     xhr.addEventListener('error', () => {
@@ -37,15 +37,12 @@ class Playlists extends React.Component {
     });
 
     xhr.send(JSON.stringify(newPlaylist));
-
-    this.props.addNewPlaylist(newPlaylist);
   }
 
   buildLeftList() {
     const playlists = this.props.playlists;
     return playlists.map((playlist) => {
-                     return <li key={playlist.id}>
-        {playlist.title}</li>
+                     return <li key={playlist.id}>{playlist.title}</li>
     })
   }
 

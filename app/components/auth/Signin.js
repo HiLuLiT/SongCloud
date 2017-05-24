@@ -8,7 +8,7 @@ export default function Signin() {
   <div className="auth">
 
     <div className="cloud-wrapper">
-    <i className="fa fa-mixcloud" aria-hidden="true"></i>
+    <i className="fa fa-mixcloud" aria-hidden="true"/>
     <h1 className="sign-in-header">SongCloud</h1>
     </div>
 
@@ -21,7 +21,9 @@ export default function Signin() {
 
       </form>
        <button className="continue-btn">CONTINUE</button>
-      <span>Don't have an account yet? <a href="" className="create-account-link">Create Account</a></span>
+      <span>Don't have an account yet?
+        <a href="" className="create-account-link">Create Account</a>
+      </span>
 
   </div>
   );

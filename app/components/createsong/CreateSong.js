@@ -75,14 +75,13 @@ class CreateSong extends React.Component {
     const target = event.target.checked;
     const listID = event.target.id;
 
-    // update store with reducer
-    this.props.handleSongsInPlaylist(target, this.props.song, listID);
-
     const xhr = new XMLHttpRequest();
     xhr.open('POST', `${serverLocation}/update-songs-in-playlists`);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.addEventListener('load', () => {
       console.log('loaded new song')
+      // update store with reducer
+      this.props.handleSongsInPlaylist(target, this.props.song, listID);
     });
 
     xhr.addEventListener('error', () => {
@@ -144,13 +143,8 @@ class CreateSong extends React.Component {
   handlePlay(song) {
     this.props.updateCurrentTrack(song);
 
-    if (this.props.isPlaying === true) {
-      const playingMode = false;
-      this.props.handlePlayMode(playingMode);
-    }
-
-    if (this.props.isPlaying === false) {
-      const playingMode = true;
+    if (this.props.isPlaying === true || (this.props.isPlaying === false)) {
+      const playingMode = !this.props.isPlaying;
       this.props.handlePlayMode(playingMode);
     }
 
@@ -158,18 +152,27 @@ class CreateSong extends React.Component {
       const playingMode = true;
       this.props.handlePlayMode(playingMode);
     }
+    if ((this.props.isPlaying === true) && (this.props.currentTrack === this.props.song)) {
+      // console.info('song was paused we should mark which one');
+    }
   }
 
   render() {
     const song = this.props.song;
     const imgURL = song.artwork_url ? song.artwork_url.replace('large', 't300x300') : song.artwork_url;
-    const playModeIcon = ((this.props.isPlaying === true) && (this.props.currentTrack === this.props.song)) ? "fa fa-pause-circle-o is-playing" : "fa fa-play-circle-o";
+    let playModeIcon;
+    if ((this.props.isPlaying === true) && (this.props.currentTrack === this.props.song)) {
+      playModeIcon = "fa fa-pause-circle-o is-playing"
+    }
+    if ((this.props.isPlaying === false) && (this.props.currentTrack === this.props.song)) {
+      playModeIcon = "is-paused";
+    }
     return (
       <div className="createsong">
         <div className="song-img"
              style={{'backgroundImage': `url(${imgURL})`}}
              onClick={ () => this.handlePlay(song)}>
-          <span className={ playModeIcon }
+          <span className={ `fa fa-play-circle-o ${playModeIcon}` }
                 aria-hidden="true"/>
         </div>
         <span className="span-song-name">{this.songTitleLimiter(song.title)}</span>

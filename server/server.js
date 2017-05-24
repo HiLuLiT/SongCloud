@@ -29,7 +29,7 @@ app.use(bodyParser.json());
 
 //express runs this function whenever there's a request (XHR request)
 // we ROUTE the request to /playlists
-app.get('/playlists', (req, res) => {
+app.get('/playlists/data', (req, res) => {
 
   // we read the file as a string
   const data = fs.readFileSync(os.tmpdir() + '/playlists.json')

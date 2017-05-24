@@ -23,7 +23,7 @@ class Root extends React.Component {
   readData() {
     const xhr = new XMLHttpRequest();
 
-    xhr.open('GET', `${serverLocation}/playlists`);
+    xhr.open('GET', `${serverLocation}/playlists/data`);
 
     xhr.addEventListener('load', () => {
       const playlist = JSON.parse(xhr.responseText);
@@ -78,14 +78,3 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(null, mapDispatchToProps)(Root);
-
-{/*{App Routes}*/
-}
-{/*<Route path="/explore/:genre" render={ (props) => {*/
-}
-{/*return <Explore playlists={this.state.playlists}*/
-}
-{/*{...props}/>*/
-}
-{/*this is example before the Redux refactor - passing the component props: we didn't use component={explore} cause this way we     can't give it properties}*/
-}
