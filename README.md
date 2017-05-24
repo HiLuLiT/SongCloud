@@ -1,8 +1,6 @@
 SongCloud - React/Redux Project
 ================================
 
-This project is part of the Front-End Development Bootcamp at Create.
-
 Challenges
 -----------
 
@@ -15,4 +13,3 @@ Challenges
 - CRUD for playlists data with a server
 - Custom Flux implementation
 - Refactor to Redux
-- ...
