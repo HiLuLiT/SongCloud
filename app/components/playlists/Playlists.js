@@ -58,7 +58,7 @@ class Playlists extends React.Component {
         <div className="left-nav">
           <div className="btn-div">
             <button className="new-playlist-btn"
-                    onClick={ () => this.addNewPlaylistHandler()}>Add New Playlist(!)
+                    onClick={ () => this.addNewPlaylistHandler()}>Add New Playlist
             </button>
           </div>
           <ul className="left-list">
