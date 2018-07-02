@@ -79,7 +79,7 @@ class CreateSong extends React.Component {
     xhr.open('POST', `${serverLocation}/update-songs-in-playlists`);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.addEventListener('load', () => {
-      console.log('loaded new song')
+      console.log('loaded new song');
       // update store with reducer
       this.props.handleSongsInPlaylist(target, this.props.song, listID);
     });

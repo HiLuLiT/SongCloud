@@ -37,7 +37,7 @@ class Player extends React.Component {
     return <div className="player shifted"/>
   }
 
-  const songUrl = `${this.props.currentTrack.stream_url}?client_id=2t9loNQH90kzJcsFCODdigxfp325aq4z`;
+  const songUrl = `${this.props.currentTrack.stream_url}?client_id=unnFdubicpq7RVFFsQucZzduDPQTaCYy`;
   const songImage = this.props.currentTrack.artwork_url ? this.props.currentTrack.artwork_url : null;
   const songName = this.props.currentTrack.title;
 

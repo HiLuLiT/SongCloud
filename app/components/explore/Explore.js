@@ -27,7 +27,7 @@ export default class Explore extends React.Component {
     const searchParams = new URLSearchParams(this.props.location.search);
     const searchTarget = searchParams.get('search') ? 'q' : 'tags';
 
-    xhr.open('GET', `https://api.soundcloud.com/tracks?client_id=2t9loNQH90kzJcsFCODdigxfp325aq4z&limit=${limit}&offset=${offset}&${searchTarget}=${genre}`);
+    xhr.open('GET', `https://api.soundcloud.com/tracks?client_id=unnFdubicpq7RVFFsQucZzduDPQTaCYy&limit=${limit}&offset=${offset}&${searchTarget}=${genre}`);
 
     xhr.addEventListener('load', () => {
       this.setState({songs: JSON.parse(xhr.responseText), loadingState: 'loaded'});
